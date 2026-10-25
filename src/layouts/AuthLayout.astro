@@ -1,0 +1,112 @@
+---
+import '@fontsource-variable/manrope';
+import '@fontsource-variable/fraunces/opsz-italic.css';
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import Img from '../components/Img.astro';
+import Avatar from '../components/Avatar.astro';
+import { photos, people } from '../data/images';
+
+interface Props {
+  title: string;
+  /** "split" = form left + photo right (auth). "centered" = single wide column (onboarding). */
+  variant?: 'split' | 'centered';
+}
+const { title, variant = 'split' } = Astro.props;
+const stats: [string, string][] = [
+  ['2,400+', 'studios on Talora'],
+  ['3x', 'faster client approvals'],
+  ['11 hrs', 'saved per week'],
+];
+---
+<!doctype html>
+<html lang="en" class="bg-ink-950">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#08070a" />
+    <meta name="robots" content="noindex" />
+    <title>{title} · Talora</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+  </head>
+  <body class="min-h-dvh overflow-x-hidden bg-ink-950 text-white">
+    {variant === 'split' ? (
+      <div class="flex min-h-dvh">
+        <div class="relative flex min-h-dvh w-full flex-col px-5 py-6 sm:px-10 lg:w-1/2 lg:px-14 xl:px-20">
+          <div class="pointer-events-none absolute -top-40 left-1/2 -z-0 h-80 w-[70%] -translate-x-1/2 rounded-full bg-amber/[0.07] blur-[110px]" aria-hidden="true"></div>
+          <header class="relative flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 text-[15px] font-semibold tracking-tight" aria-label="Talora home"><Logo class="size-6" />Talora</a>
+            <a href="/app" class="text-[12px] text-mist-400 transition hover:text-white">Explore the demo</a>
+          </header>
+          <main id="main" class="relative flex flex-1 items-center justify-center py-10">
+            <div class="w-full max-w-sm">
+              <slot />
+            </div>
+          </main>
+          <footer class="relative flex flex-wrap items-center justify-between gap-3 text-[12px] text-mist-400">
+            <span>© Talora {new Date().getFullYear()}</span>
+            <nav class="flex gap-4" aria-label="Legal">
+              <a href="/privacy" class="transition hover:text-white">Privacy</a>
+              <a href="/terms" class="transition hover:text-white">Terms</a>
+            </nav>
+          </footer>
+        </div>
+
+        <aside class="sticky top-0 hidden h-dvh w-1/2 p-3 lg:block" aria-label="Customer story">
+          <div class="img-shell relative isolate h-full overflow-hidden rounded-[28px]">
+            <Img id={photos.heroDunes} alt="" eager widths={[960, 1280, 1920]} sizes="50vw" class="absolute inset-0 -z-10 size-full object-cover object-[50%_65%]" />
+            <div class="absolute inset-0 -z-10 bg-gradient-to-b from-ink-950/60 via-ink-950/10 to-ink-950/90" aria-hidden="true"></div>
+            <div class="absolute bottom-0 left-1/2 -z-10 h-72 w-[70%] -translate-x-1/2 rounded-full bg-amber/20 blur-[120px]" aria-hidden="true"></div>
+
+            <div class="flex h-full flex-col justify-between p-8 xl:p-10">
+              <p class="max-w-[22ch] text-[30px] font-medium leading-[1.1] tracking-[-0.035em] xl:text-[36px]">
+                Run every client like your <span class="serif-accent text-amber-soft">best one.</span>
+              </p>
+
+              <div class="space-y-4">
+                <figure class="glass max-w-lg rounded-2xl p-6">
+                  <blockquote class="text-[15px] leading-relaxed text-white/90">
+                    "Our clients approve work in the portal now, not in a 40 message email chain. Invoices get paid days earlier, and nobody on the team asks where the latest file lives."
+                  </blockquote>
+                  <figcaption class="mt-5 flex items-center gap-3">
+                    <Avatar id={people.amara} name="Amara Okafor" size={36} />
+                    <span class="text-[13px] leading-tight"><span class="block font-semibold">Amara Okafor</span><span class="text-mist-300">Founder, Kiln Studio</span></span>
+                  </figcaption>
+                </figure>
+                <dl class="grid max-w-lg grid-cols-3 gap-3">
+                  {stats.map(([v, l]) => (
+                    <div class="rounded-xl bg-ink-950/40 px-4 py-3 ring-1 ring-white/10 backdrop-blur-md">
+                      <dt class="sr-only">{l}</dt>
+                      <dd class="text-[20px] font-semibold tracking-tight">{v}</dd>
+                      <dd class="text-[11px] leading-snug text-mist-300">{l}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    ) : (
+      <div class="relative flex min-h-dvh flex-col px-4 py-6 sm:px-8">
+        <div class="pointer-events-none absolute inset-x-0 top-0 -z-0 h-[420px] bg-[radial-gradient(60%_100%_at_50%_0%,rgba(244,166,74,0.12),transparent)]" aria-hidden="true"></div>
+        <header class="relative mx-auto flex w-full max-w-3xl items-center justify-between">
+          <a href="/" class="flex items-center gap-2 text-[15px] font-semibold tracking-tight" aria-label="Talora home"><Logo class="size-6" />Talora</a>
+          <a href="/app" class="text-[12px] text-mist-400 transition hover:text-white">Skip to dashboard</a>
+        </header>
+        <main id="main" class="relative mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center py-8">
+          <slot />
+        </main>
+        <footer class="relative mx-auto flex w-full max-w-3xl flex-wrap items-center justify-between gap-3 text-[12px] text-mist-400">
+          <span>© Talora {new Date().getFullYear()}</span>
+          <nav class="flex gap-4" aria-label="Legal">
+            <a href="/privacy" class="transition hover:text-white">Privacy</a>
+            <a href="/terms" class="transition hover:text-white">Terms</a>
+          </nav>
+        </footer>
+      </div>
+    )}
+  </body>
+</html>

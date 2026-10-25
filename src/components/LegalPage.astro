@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteNav from './SiteNav.astro';
+import SiteFooter from './SiteFooter.astro';
+import PageHero from './PageHero.astro';
+import Icon from './Icon.astro';
+import { photos } from '../data/images';
+
+export interface LegalSection {
+  id: string;
+  title: string;
+  /** Paragraphs. Simple inline HTML (links, strong) is allowed. */
+  body: string[];
+  list?: string[];
+}
+interface Props {
+  title: string;
+  accent?: string;
+  metaTitle: string;
+  description: string;
+  updated: string;
+  updatedIso: string;
+  intro: string;
+  sections: LegalSection[];
+  photo?: keyof typeof photos;
+  other: { label: string; href: string };
+}
+const { title, accent, metaTitle, description, updated, updatedIso, intro, sections, photo = 'desertRoad', other } = Astro.props;
+---
+<Base title={metaTitle} description={description}>
+  <SiteNav />
+  <PageHero label="Legal" title={title} accent={accent} subtitle={intro} photo={photo} position="object-[50%_60%]" />
+
+  <main id="main" class="container-x py-16 sm:py-24">
+    <div class="grid gap-10 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-16 xl:grid-cols-[260px_minmax(0,1fr)_200px]">
+      <aside class="lg:sticky lg:top-8 lg:self-start" aria-label="On this page">
+        <div class="rounded-[22px] bg-ink-900 p-5 ring-1 ring-white/[0.07]">
+          <p class="text-[11px] font-medium uppercase tracking-[0.18em] text-mist-400">On this page</p>
+          <nav class="mt-4">
+            <ol class="toc max-h-[60vh] space-y-0.5 overflow-y-auto text-[13px] scrollbar-thin">
+              {sections.map((s, i) => (
+                <li>
+                  <a href={`#${s.id}`} data-toc={s.id} class="flex gap-2.5 rounded-lg px-2.5 py-1.5 text-mist-400 transition hover:bg-white/[0.03] hover:text-white">
+                    <span class="w-4 shrink-0 font-mono text-[11px] leading-5 text-mist-400/70">{String(i + 1).padStart(2, '0')}</span>
+                    <span>{s.title}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+          <div class="mt-5 border-t border-white/[0.07] pt-4 text-[12px] text-mist-400">
+            <p>Last updated <time datetime={updatedIso} class="text-white">{updated}</time></p>
+            <a href={other.href} class="mt-2 inline-flex items-center gap-1 text-amber-soft hover:text-amber">{other.label} <Icon name="arrow" class="size-3" /></a>
+          </div>
+        </div>
+      </aside>
+
+      <article class="legal max-w-[70ch]">
+        <p class="mb-10 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-2xl bg-ink-900 px-5 py-4 text-[13px] text-mist-300 ring-1 ring-white/[0.07]">
+          <Icon name="clock" class="size-4 text-amber" />
+          <span>Effective and last updated on <time datetime={updatedIso} class="font-semibold text-white">{updated}</time></span>
+        </p>
+        {sections.map((s, i) => (
+          <section id={s.id} class="scroll-mt-8 border-t border-white/[0.07] pt-10 pb-4 first-of-type:border-t-0 first-of-type:pt-0">
+            <h2 class="flex items-baseline gap-3 text-[22px] font-medium tracking-[-0.025em] sm:text-[24px]">
+              <span class="font-serif text-[16px] font-light italic text-amber-soft">{String(i + 1).padStart(2, '0')}</span>
+              {s.title}
+            </h2>
+            {s.body.map((p) => <p set:html={p} />)}
+            {s.list && (
+              <ul>
+                {s.list.map((li) => <li set:html={li} />)}
+              </ul>
+            )}
+          </section>
+        ))}
+        <div class="mt-12 rounded-[22px] bg-ink-900 p-6 ring-1 ring-white/[0.07]">
+          <p class="text-[15px] font-semibold">Questions about this document?</p>
+          <p class="mt-1 text-[14px] text-mist-400">Write to <a href="mailto:legal@talora.app" class="text-amber-soft underline-offset-4 hover:underline">legal@talora.app</a> or use the <a href="/contact" class="text-amber-soft underline-offset-4 hover:underline">contact form</a>. We reply to every request within 30 days, usually much sooner.</p>
+        </div>
+      </article>
+      <div class="hidden xl:block" aria-hidden="true"></div>
+    </div>
+  </main>
+
+  <SiteFooter />
+</Base>
+
+<style>
+  .legal :global(p) { margin-top: 1rem; font-size: 15px; line-height: 1.8; color: var(--color-mist-300); }
+  .legal :global(h2 + p) { margin-top: 1.1rem; }
+  .legal :global(ul) { margin-top: 1rem; display: grid; gap: .55rem; font-size: 15px; line-height: 1.7; color: var(--color-mist-300); }
+  .legal :global(ul li) { position: relative; padding-left: 1.4rem; }
+  .legal :global(ul li::before) { content: ''; position: absolute; left: .2rem; top: .72em; width: 6px; height: 6px; border-radius: 9999px; background: color-mix(in srgb, var(--color-amber) 70%, transparent); }
+  .legal :global(strong) { color: #fff; font-weight: 600; }
+  .legal :global(section a) { color: var(--color-amber-soft); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: color-mix(in srgb, var(--color-amber-soft) 40%, transparent); }
+  .legal :global(section a:hover) { color: var(--color-amber); }
+  .toc a.is-active { color: #fff; background: rgba(244, 166, 74, 0.08); }
+  .toc a.is-active span:first-child { color: var(--color-amber); }
+</style>
+
+<script>
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-toc]');
+  const map = new Map<string, HTMLAnchorElement>();
+  links.forEach((a) => map.set(a.dataset.toc!, a));
+  const visible = new Set<string>();
+  const order = [...map.keys()];
+  const spy = new IntersectionObserver((entries) => {
+    for (const e of entries) e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id);
+    const current = order.find((id) => visible.has(id));
+    if (!current) return;
+    links.forEach((a) => a.classList.toggle('is-active', a.dataset.toc === current));
+    const a = map.get(current);
+    if (a) a.setAttribute('aria-current', 'location');
+    links.forEach((l) => { if (l !== a) l.removeAttribute('aria-current'); });
+  }, { rootMargin: '-15% 0px -65% 0px' });
+  order.forEach((id) => { const el = document.getElementById(id); if (el) spy.observe(el); });
+</script>

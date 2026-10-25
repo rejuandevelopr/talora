@@ -1,0 +1,39 @@
+---
+import Img from './Img.astro';
+import { photos } from '../data/images';
+
+type PhotoKey = keyof typeof photos;
+interface Props {
+  title: string;
+  accent?: string;
+  titleEnd?: string;
+  subtitle?: string;
+  label?: string;
+  photo?: PhotoKey;
+  position?: string;
+  align?: 'left' | 'center';
+}
+const { title, accent, titleEnd, subtitle, label, photo = 'heroDunes', position = 'object-[50%_60%]', align = 'left' } = Astro.props;
+const center = align === 'center';
+---
+<header class="container-x pt-4 sm:pt-5">
+  <div class="img-shell relative isolate overflow-hidden rounded-[28px] sm:rounded-[32px]">
+    <Img id={photos[photo]} alt="" eager widths={[640, 960, 1280, 1920]} sizes="(min-width: 1480px) 1400px, 100vw" class={`absolute inset-0 -z-10 size-full object-cover ${position}`} />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-ink-950/75 via-ink-950/35 to-ink-950/95" aria-hidden="true"></div>
+    <div class:list={['absolute inset-0 -z-10', center ? 'bg-ink-950/10' : 'bg-gradient-to-r from-ink-950/70 via-ink-950/20 to-transparent']} aria-hidden="true"></div>
+    <div class="absolute -bottom-24 left-[12%] -z-10 h-64 w-[55%] rounded-full bg-amber/20 blur-[110px]" aria-hidden="true"></div>
+
+    <div class:list={['flex min-h-[360px] flex-col justify-end px-6 pb-10 pt-20 sm:min-h-[400px] sm:px-12 sm:pb-14 lg:min-h-[420px]', center && 'items-center text-center']}>
+      {label && (
+        <p class="animate-fade-up text-[11px] font-medium uppercase tracking-[0.22em] text-white/60">{label}</p>
+      )}
+      <h1 class:list={['animate-fade-up mt-4 max-w-[20ch] text-[38px] font-medium leading-[1.04] tracking-[-0.045em] text-balance [animation-delay:80ms] sm:text-[54px] lg:text-[64px]', center && 'mx-auto']}>
+        {title}{accent && <> <span class="serif-accent text-amber-soft">{accent}</span></>}{titleEnd && <>{titleEnd.match(/^[.,!?]/) ? '' : ' '}{titleEnd}</>}
+      </h1>
+      {subtitle && (
+        <p class:list={['animate-fade-up mt-5 max-w-xl text-[15px] leading-relaxed text-white/75 [animation-delay:160ms] sm:text-base', center && 'mx-auto']}>{subtitle}</p>
+      )}
+      <slot />
+    </div>
+  </div>
+</header>

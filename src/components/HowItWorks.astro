@@ -1,0 +1,136 @@
+---
+import SectionHead from './SectionHead.astro';
+import Img from './Img.astro';
+import Icon from './Icon.astro';
+import Avatar from './Avatar.astro';
+import { photos, people } from '../data/images';
+
+const steps = [
+  { title: 'Onboard the client', text: 'Send a branded portal link. Clients see their projects, files and invoices without another login to remember.' },
+  { title: 'Scope it with AI', text: 'Drop in call notes and Talora drafts a clear brief, timeline and quote you can tweak in minutes.' },
+  { title: 'Share and get approval', text: 'Clients comment right on the work and approve each milestone with one click.' },
+  { title: 'Get paid on time', text: 'Approved milestones turn into invoices automatically, with reminders that chase for you.' },
+];
+---
+<section id="how" class="container-x py-24 sm:py-32">
+  <SectionHead title="From first brief to final invoice in" accent="four steps" text="Talora follows the way studios already work, so your team and your clients pick it up on day one. No training sessions, no messy spreadsheets." />
+
+  <div class="mt-14 grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-14">
+    <div class="flex flex-col" data-reveal>
+      <ol role="tablist" aria-label="Steps" class="space-y-2">
+        {steps.map((s, i) => (
+          <li>
+            <button role="tab" id={`step-tab-${i}`} aria-controls={`step-panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'} data-step={i}
+              class="group relative w-full overflow-hidden rounded-2xl px-5 py-4 text-left ring-1 ring-transparent transition aria-selected:bg-ink-850 aria-selected:ring-white/[0.07] hover:bg-ink-900">
+              <span class="flex items-baseline gap-4">
+                <span class="font-serif text-[15px] italic text-mist-400 group-aria-selected:text-amber">{String(i + 1).padStart(2, '0')}</span>
+                <span>
+                  <span class="block text-[16px] font-semibold text-mist-300 group-aria-selected:text-white">{s.title}</span>
+                  <span class="grid grid-rows-[0fr] transition-all duration-500 group-aria-selected:grid-rows-[1fr]">
+                    <span class="overflow-hidden text-[13px] leading-relaxed text-mist-400"><span class="block max-w-sm pt-1.5">{s.text}</span></span>
+                  </span>
+                </span>
+              </span>
+              <span class="bar absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 bg-amber"></span>
+            </button>
+          </li>
+        ))}
+      </ol>
+      <a href="#features" class="btn-light mt-8 self-start">See it in action <Icon name="arrow" class="size-3.5" /></a>
+    </div>
+
+    <!-- Visual -->
+    <div class="img-shell relative isolate min-h-[440px] overflow-hidden rounded-3xl sm:min-h-[480px]" data-reveal>
+      <Img id={photos.canyonRoad} alt="" widths={[640, 960, 1280]} sizes="(min-width: 1024px) 600px, 100vw" class="absolute inset-0 -z-10 size-full object-cover" />
+      <div class="absolute inset-0 -z-10 bg-gradient-to-tr from-ink-950/70 via-ink-950/20 to-transparent"></div>
+
+      <div class="absolute bottom-6 left-5 right-5 top-14 sm:left-auto sm:right-6 sm:top-12 sm:w-[78%]">
+        <!-- 0 Onboard -->
+        <div id="step-panel-0" role="tabpanel" aria-labelledby="step-tab-0" data-panel="0" class="panel glass h-full rounded-2xl p-5">
+          <p class="flex items-center gap-2 text-[15px] font-semibold"><Icon name="link" class="size-4 text-amber" /> Client portal</p>
+          <div class="mt-5 rounded-xl bg-ink-700/70 p-4 ring-1 ring-white/5">
+            <div class="flex items-center gap-3">
+              <span class="grid size-10 place-items-center rounded-xl bg-cream font-serif text-lg italic text-ink-950">K</span>
+              <div><p class="text-[14px] font-semibold">Kiln Studio</p><p class="text-[11px] text-mist-400">portal.talora.app/kiln</p></div>
+              <span class="tag ml-auto bg-emerald-400/15 text-emerald-300">Live</span>
+            </div>
+          </div>
+          <p class="mt-5 text-[11px] text-mist-400">Invite client contacts</p>
+          <ul class="mt-2 space-y-2 text-[12px]">
+            <li class="flex items-center gap-2 rounded-lg bg-ink-700/60 p-2.5"><Avatar id={people.amara} name="Amara Okafor" size={24} />amara@kilnstudio.co<span class="tag ml-auto bg-emerald-400/15 text-emerald-300">Joined</span></li>
+            <li class="flex items-center gap-2 rounded-lg bg-ink-700/60 p-2.5"><Avatar id={people.leo} name="Leo Hart" size={24} />leo@kilnstudio.co<span class="tag ml-auto bg-amber/15 text-amber-soft">Invited</span></li>
+          </ul>
+          <button type="button" class="btn-amber mt-5 !text-[12px]"><Icon name="plus" class="size-3.5" />Add contact</button>
+        </div>
+
+        <!-- 1 AI brief -->
+        <div id="step-panel-1" role="tabpanel" aria-labelledby="step-tab-1" data-panel="1" class="panel glass hidden h-full rounded-2xl p-5">
+          <p class="flex items-center gap-2 text-[15px] font-semibold"><Icon name="sparkle" class="size-4 text-amber" /> Brief draft</p>
+          <p class="mt-1 text-[11px] text-mist-400">Generated from 42 min of call notes</p>
+          <div class="mt-4 space-y-3 rounded-xl bg-ink-700/60 p-4 text-[12px] leading-relaxed ring-1 ring-white/5">
+            <p><span class="text-mist-400">Goal</span><br />Refresh the Kiln brand for the spring ceramics launch.</p>
+            <p><span class="text-mist-400">Deliverables</span><br />Logo refinement, packaging system, 6 page site.</p>
+            <div class="flex gap-6"><p><span class="text-mist-400">Timeline</span><br />6 weeks</p><p><span class="text-mist-400">Quote</span><br />$18,400</p></div>
+          </div>
+          <div class="mt-4 flex gap-2"><button type="button" class="btn-amber !text-[12px]">Use this brief</button><button type="button" class="btn-ghost !text-[12px]">Regenerate</button></div>
+        </div>
+
+        <!-- 2 Approval -->
+        <div id="step-panel-2" role="tabpanel" aria-labelledby="step-tab-2" data-panel="2" class="panel glass hidden h-full rounded-2xl p-5">
+          <p class="flex items-center gap-2 text-[15px] font-semibold"><Icon name="check" class="size-4 text-amber" /> Milestone review</p>
+          <div class="mt-4 grid grid-cols-3 gap-2">
+            <span class="aspect-[4/5] rounded-lg bg-gradient-to-br from-amber/80 to-ember/70"></span>
+            <span class="aspect-[4/5] rounded-lg bg-gradient-to-br from-cream to-amber-soft/70"></span>
+            <span class="aspect-[4/5] rounded-lg bg-gradient-to-br from-ink-500 to-ink-700"></span>
+          </div>
+          <ul class="mt-4 space-y-2 text-[12px]">
+            <li class="flex gap-2 rounded-lg bg-ink-700/60 p-2.5"><Avatar id={people.amara} name="Amara Okafor" size={22} /><span><b class="font-semibold">Amara</b> <span class="text-mist-300">Love the warmer palette. Approved!</span></span></li>
+          </ul>
+          <div class="mt-4 flex items-center gap-2 rounded-lg bg-emerald-500/10 p-2.5 text-[12px] text-emerald-300 ring-1 ring-emerald-400/20"><Icon name="check" class="size-4" />Packaging round 2 approved</div>
+        </div>
+
+        <!-- 3 Invoice -->
+        <div id="step-panel-3" role="tabpanel" aria-labelledby="step-tab-3" data-panel="3" class="panel glass hidden h-full rounded-2xl p-5">
+          <p class="flex items-center gap-2 text-[15px] font-semibold"><Icon name="receipt" class="size-4 text-amber" /> Invoice #0142</p>
+          <div class="mt-4 rounded-xl bg-cream p-4 text-ink-950">
+            <div class="flex justify-between text-[11px] text-ink-500"><span>Kiln Studio</span><span>Due Nov 14</span></div>
+            <p class="mt-3 text-3xl font-semibold tracking-tight">$6,200</p>
+            <p class="text-[11px] text-ink-500">Milestone 2 · Packaging system</p>
+          </div>
+          <ul class="mt-4 space-y-2.5 text-[12px] text-mist-300">
+            <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-emerald-400"></span>Sent automatically after approval</li>
+            <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-amber"></span>Reminder scheduled for Nov 12</li>
+            <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-white/30"></span>Card, bank transfer or Apple Pay</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('#how [data-step]');
+  const panels = document.querySelectorAll<HTMLElement>('#how [data-panel]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const DURATION = 6000;
+  let current = 0;
+  let timer: number | undefined;
+  const show = (i: number) => {
+    current = i;
+    tabs.forEach((t, j) => {
+      t.setAttribute('aria-selected', String(i === j));
+      const bar = t.querySelector<HTMLElement>('.bar')!;
+      bar.getAnimations().forEach((a) => a.cancel());
+      if (i === j && !reduce) bar.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: DURATION, easing: 'linear', fill: 'forwards' });
+    });
+    panels.forEach((p, j) => p.classList.toggle('hidden', i !== j));
+  };
+  const auto = () => { clearInterval(timer); if (!reduce) timer = window.setInterval(() => show((current + 1) % tabs.length), DURATION); };
+  tabs.forEach((t, i) => t.addEventListener('click', () => { show(i); auto(); }));
+  show(0); auto();
+</script>
+
+<style>
+  .panel:not(.hidden) { animation: panel-in .5s cubic-bezier(.2,.7,.2,1); }
+  @keyframes panel-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+</style>

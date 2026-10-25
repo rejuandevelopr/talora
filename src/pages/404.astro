@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import Img from '../components/Img.astro';
+import Icon from '../components/Icon.astro';
+import Logo from '../components/Logo.astro';
+import { photos } from '../data/images';
+---
+<Base title="Page not found | Talora" description="The page you are looking for could not be found.">
+  <main id="main" class="img-shell relative isolate flex min-h-dvh flex-col overflow-hidden">
+    <Img id={photos.milkyWay} alt="" eager widths={[640, 1280, 1920, 2560]} sizes="100vw" class="absolute inset-0 -z-20 size-full object-cover object-[50%_40%]" />
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-ink-950/70 via-ink-950/30 to-ink-950" aria-hidden="true"></div>
+    <div class="absolute bottom-0 left-1/2 -z-10 h-80 w-[70%] -translate-x-1/2 rounded-full bg-amber/20 blur-[130px]" aria-hidden="true"></div>
+
+    <div class="container-x flex items-center justify-between pt-6">
+      <a href="/" class="flex items-center gap-2 text-[15px] font-semibold tracking-tight" aria-label="Talora home"><Logo class="size-6" /> Talora</a>
+      <a href="/contact" class="text-[13px] text-white/70 hover:text-white">Report a broken link</a>
+    </div>
+
+    <div class="container-x flex flex-1 flex-col items-center justify-center py-20 text-center">
+      <p class="animate-fade-up font-serif text-[120px] font-light italic leading-none tracking-[-0.04em] text-amber-soft/90 sm:text-[180px]" aria-hidden="true">404</p>
+      <h1 class="animate-fade-up mt-2 max-w-[16ch] text-[40px] font-medium leading-[1.05] tracking-[-0.045em] [animation-delay:80ms] sm:text-6xl">Lost in the <span class="serif-accent text-amber-soft">dunes</span>.</h1>
+      <p class="animate-fade-up mt-5 max-w-md text-[15px] leading-relaxed text-white/75 [animation-delay:160ms]">The page you were looking for has drifted away, or never existed. Here are a few good places to find your way back.</p>
+      <div class="animate-fade-up mt-9 flex flex-wrap justify-center gap-3 [animation-delay:240ms]">
+        <a href="/" class="btn-amber !px-5 !py-2.5">Back to home <Icon name="arrow" class="size-3.5" /></a>
+        <a href="/app" class="btn-ghost !px-5 !py-2.5"><Icon name="play" class="size-3 fill-current" />Explore the live demo</a>
+        <a href="/contact" class="btn-ghost !px-5 !py-2.5"><Icon name="mail" class="size-3.5" />Contact us</a>
+      </div>
+    </div>
+
+    <p class="pb-6 text-center text-[11px] text-white/50">Error 404. Page not found.</p>
+  </main>
+</Base>

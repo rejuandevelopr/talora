@@ -1,0 +1,227 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import PageHero from '../components/PageHero.astro';
+import Pricing from '../components/Pricing.astro';
+import Cta from '../components/Cta.astro';
+import Icon from '../components/Icon.astro';
+
+type Cell = boolean | string;
+type Row = [string, Cell, Cell, Cell];
+const groups: { title: string; icon: string; rows: Row[] }[] = [
+  {
+    title: 'Clients & portal',
+    icon: 'users',
+    rows: [
+      ['Active clients', 'Up to 5', 'Unlimited', 'Unlimited'],
+      ['Branded client portal', true, true, true],
+      ['Custom portal domain', false, false, true],
+      ['Client comments and file sharing', true, true, true],
+      ['Shared message threads', true, true, true],
+      ['Remove Talora branding', false, true, true],
+    ],
+  },
+  {
+    title: 'Projects',
+    icon: 'folder',
+    rows: [
+      ['Active projects', '10', 'Unlimited', 'Unlimited'],
+      ['Kanban boards and task lists', true, true, true],
+      ['Studio timeline view', false, true, true],
+      ['Approvals with version history', 'Basic', true, true],
+      ['Time tracking', false, true, true],
+      ['Project templates', '3', 'Unlimited', 'Unlimited'],
+    ],
+  },
+  {
+    title: 'Money',
+    icon: 'receipt',
+    rows: [
+      ['Proposals and quotes', true, true, true],
+      ['Invoices and online payments', true, true, true],
+      ['Automatic payment reminders', false, true, true],
+      ['Milestone and retainer billing', false, true, true],
+      ['Multi currency invoicing', false, true, true],
+      ['Profitability reports', false, false, true],
+    ],
+  },
+  {
+    title: 'AI',
+    icon: 'sparkle',
+    rows: [
+      ['AI briefs from call notes', '10 per month', 'Unlimited', 'Unlimited'],
+      ['AI quote drafts', false, true, true],
+      ['Weekly client update drafts', false, true, true],
+      ['Custom studio voice and templates', false, false, true],
+    ],
+  },
+  {
+    title: 'Security & admin',
+    icon: 'shield',
+    rows: [
+      ['Two factor authentication', true, true, true],
+      ['Roles and permissions', false, 'Admin, member', 'Custom roles'],
+      ['SAML single sign on', false, false, true],
+      ['Audit log', false, false, '12 months'],
+      ['Data residency (EU or US)', false, false, true],
+      ['Uptime SLA', false, false, '99.9%'],
+    ],
+  },
+  {
+    title: 'Support',
+    icon: 'message',
+    rows: [
+      ['Help center and community', true, true, true],
+      ['Email support', '48 hour response', '12 hour response', '4 hour response'],
+      ['Free migration help', false, true, true],
+      ['Dedicated success manager', false, false, true],
+      ['Onboarding workshop for your team', false, false, true],
+    ],
+  },
+];
+const plans = [
+  { name: 'Solo', price: '$12', note: 'per month' },
+  { name: 'Studio', price: '$29', note: 'per seat, per month', featured: true },
+  { name: 'Agency', price: '$59', note: 'per seat, per month' },
+];
+
+const brands = ['Northfold', 'Kiln Studio', 'PARALLEL', 'Oakhaus', 'Lumen & Co', 'fieldwork', 'Vantage', 'Studio Mono'];
+const brandStyle = [
+  'font-serif italic text-xl',
+  'font-semibold tracking-tight text-lg',
+  'tracking-[0.3em] text-sm font-medium',
+  'font-bold text-lg',
+  'font-serif text-xl',
+  'font-extrabold lowercase tracking-tight text-lg',
+  'font-light tracking-[0.12em] uppercase text-base',
+  'font-medium text-lg',
+];
+
+const faqs = [
+  ['How does the free trial work?', 'Every plan starts with 14 days of full Studio features. You do not need a card to start, and nothing is charged until you pick a plan. If you do not choose one, your workspace switches to read only so you never lose your data.'],
+  ['Do my clients need to pay for a seat?', 'No. Clients are always free and unlimited. They log into your branded portal to view progress, leave feedback, approve work and pay invoices. Seats are only for people on your team.'],
+  ['Can I change plans later?', 'Yes, at any time from Settings. Upgrades apply immediately and are prorated to the day. Downgrades take effect at the end of your current billing period.'],
+  ['What payment methods do you support for invoices?', 'Clients can pay by card, Apple Pay, Google Pay, SEPA Direct Debit and ACH bank transfer through Stripe. Payouts land in your own Stripe account, and Talora never takes a cut of your invoices.'],
+  ['Can you help us move from our current tools?', 'On Studio and Agency plans our team will import clients, projects and open invoices from spreadsheets, Notion, Asana, HoneyBook or Harvest for free. Most studios are fully set up within a week.'],
+  ['How does Talora handle our data?', 'Data is encrypted in transit and at rest, backed up hourly and hosted in the EU or US. Agency workspaces can choose their region. You can export everything as CSV or JSON whenever you like.'],
+  ['Do you offer discounts for nonprofits or education?', 'Yes. Registered nonprofits, students and teaching studios get 40% off any plan. Send us a note from the contact page with a little about your organisation and we will set it up.'],
+  ['What happens if I cancel?', 'You keep access until the end of your billing period, then the workspace becomes read only for 90 days so you can export anything you need. After that, your data is permanently deleted.'],
+];
+
+function cellText(v: Cell) { return typeof v === 'string' ? v : v ? 'Included' : 'Not included'; }
+---
+<Base title="Pricing | Talora" description="Simple plans for freelancers, studios and agencies. Compare every Talora feature across Solo, Studio and Agency, and start free for 14 days.">
+  <SiteNav />
+  <PageHero
+    label="Pricing"
+    title="Plans that grow with your"
+    accent="studio"
+    titleEnd="."
+    subtitle="Clients are always free. Pay only for the people on your team, and switch plans whenever your studio changes shape."
+    photo="desertRoad"
+    position="object-[50%_55%]"
+  />
+
+  <main id="main">
+    <Pricing />
+
+    <section id="compare" class="container-x pb-24 sm:pb-32" aria-labelledby="compare-title">
+      <div data-reveal>
+        <h2 id="compare-title" class="text-3xl font-medium leading-[1.1] tracking-[-0.035em] sm:text-[42px]">Compare every <span class="serif-accent text-amber-soft">feature</span></h2>
+        <p class="mt-3 max-w-md text-[14px] leading-relaxed text-mist-400">Everything in each plan, side by side. Swipe the table sideways on smaller screens.</p>
+      </div>
+
+      <div class="mt-10 overflow-x-auto rounded-[24px] bg-ink-900 ring-1 ring-white/[0.07] scrollbar-thin lg:overflow-visible" data-reveal>
+        <table class="w-full min-w-[720px] border-separate border-spacing-0 text-left text-[13px]">
+          <caption class="sr-only">Feature comparison across Solo, Studio and Agency plans</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="sticky top-0 z-10 w-[38%] rounded-tl-[24px] border-b border-white/[0.06] bg-ink-900/95 px-5 py-5 align-bottom backdrop-blur sm:px-7">
+                <span class="text-[11px] font-medium uppercase tracking-[0.16em] text-mist-400">Plans</span>
+              </th>
+              {plans.map((p, i) => (
+                <th scope="col" class:list={['sticky top-0 z-10 border-b border-white/[0.06] bg-ink-900/95 px-4 py-5 align-bottom backdrop-blur', i === plans.length - 1 && 'rounded-tr-[24px]']}>
+                  <span class="flex items-center gap-2 text-[15px] font-semibold">
+                    {p.name}
+                    {p.featured && <span class="tag bg-amber/15 text-amber-soft">Popular</span>}
+                  </span>
+                  <span class="mt-1 block text-[12px] font-normal text-mist-400"><span class="text-white">{p.price}</span> {p.note}</span>
+                  <a href="/signup" class:list={['mt-3 !px-3 !py-1.5 !text-[12px]', p.featured ? 'btn-amber' : 'btn-ghost']}>Start free</a>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          {groups.map((g) => (
+            <tbody>
+              <tr>
+                <th scope="colgroup" colspan="4" class="border-b border-white/[0.06] bg-ink-850 px-5 py-3 sm:px-7">
+                  <span class="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-mist-300">
+                    <Icon name={g.icon} class="size-3.5 text-amber" />{g.title}
+                  </span>
+                </th>
+              </tr>
+              {g.rows.map(([label, ...cells]) => (
+                <tr class="transition hover:bg-white/[0.02]">
+                  <th scope="row" class="border-b border-white/[0.05] px-5 py-3.5 font-normal text-mist-200 sm:px-7">{label}</th>
+                  {cells.map((c, i) => (
+                    <td class:list={['border-b border-white/[0.05] px-4 py-3.5', i === 1 && 'bg-amber/[0.025]']}>
+                      {c === true ? (
+                        <span class="grid size-5 place-items-center rounded-full bg-amber/15 text-amber" title="Included"><Icon name="check" class="size-3" /><span class="sr-only">Included</span></span>
+                      ) : c === false ? (
+                        <span class="block h-px w-3 bg-white/25" title="Not included"><span class="sr-only">Not included</span></span>
+                      ) : (
+                        <span class="text-white">{cellText(c)}</span>
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          ))}
+        </table>
+      </div>
+    </section>
+
+    <section class="border-y border-white/[0.06] bg-ink-900/40 py-12" aria-label="Customers">
+      <div class="container-x" data-reveal>
+        <p class="text-center text-[11px] uppercase tracking-[0.2em] text-mist-400">Trusted by 2,400+ independent studios and agencies</p>
+        <ul class="mt-7 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 text-white/55">
+          {brands.map((b, i) => <li class={`whitespace-nowrap transition hover:text-white ${brandStyle[i]}`}>{b}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section id="faq" class="container-x py-24 sm:py-32" aria-labelledby="faq-title">
+      <div class="grid gap-12 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
+        <div data-reveal>
+          <h2 id="faq-title" class="text-3xl font-medium leading-[1.1] tracking-[-0.035em] sm:text-[42px]">Questions, <span class="serif-accent text-amber-soft">answered</span></h2>
+          <p class="mt-4 max-w-sm text-[14px] leading-relaxed text-mist-400">Cannot find what you are looking for? Our team usually replies within a few hours on weekdays.</p>
+          <a href="/contact" class="btn-light mt-6">Talk to us <Icon name="arrow" class="size-3.5" /></a>
+        </div>
+        <div class="divide-y divide-white/[0.07] border-y border-white/[0.07]" data-reveal>
+          {faqs.map(([q, a], i) => (
+            <details class="faq group" open={i === 0}>
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-[15px] font-medium transition hover:text-amber-soft sm:text-base">
+                {q}
+                <span class="grid size-8 shrink-0 place-items-center rounded-full bg-white/5 ring-1 ring-white/10 transition duration-300 group-open:rotate-45 group-open:bg-amber group-open:text-ink-950 group-open:ring-amber">
+                  <Icon name="plus" class="size-4" />
+                </span>
+              </summary>
+              <p class="max-w-2xl pb-6 pr-12 text-[14px] leading-relaxed text-mist-400">{a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <Cta />
+  </main>
+  <SiteFooter />
+</Base>
+
+<style>
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq[open] p { animation: faq-in .35s ease both; }
+  @keyframes faq-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+</style>

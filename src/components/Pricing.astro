@@ -1,0 +1,74 @@
+---
+import Icon from './Icon.astro';
+
+const plans = [
+  { name: 'Solo', icon: 'sparkle', desc: 'For freelancers running a handful of clients.', monthly: 12, yearly: 10, badge: '1 seat', features: ['Up to 5 active clients', 'Branded client portal', 'Proposals & quotes', 'Online payments', 'Email support'] },
+  { name: 'Studio', icon: 'layers', desc: 'For small teams who want everything in one place.', monthly: 29, yearly: 23, badge: 'Per seat', featured: true, features: ['Unlimited clients', 'AI brief & quote drafts', 'Timelines & approvals', 'Time tracking', 'Automatic invoice reminders', 'Priority support'] },
+  { name: 'Agency', icon: 'shield', desc: 'For growing agencies that need control and scale.', monthly: 59, yearly: 47, badge: 'Per seat', features: ['Everything in Studio', 'Custom portal domain', 'Roles & permissions', 'SSO & audit logs', 'Profitability reports', 'Dedicated success manager', 'Uptime SLA'] },
+];
+---
+<section id="pricing" class="container-x py-24 sm:py-32">
+  <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between" data-reveal>
+    <div>
+      <h2 class="text-4xl font-medium tracking-[-0.04em] sm:text-5xl">Simple plans, <span class="serif-accent text-amber-soft">honest</span> pricing</h2>
+      <p class="mt-3 max-w-sm text-[14px] leading-relaxed text-mist-400">Start free for 14 days. No card needed, and you can change plans whenever your studio does.</p>
+    </div>
+    <div class="flex items-center gap-3 self-start rounded-full bg-ink-900 p-1.5 pl-4 text-[13px] ring-1 ring-white/[0.07] md:self-auto">
+      <span id="lbl-m" class="text-white">Monthly</span>
+      <button id="bill-toggle" role="switch" aria-checked="false" aria-label="Bill yearly" class="group relative h-6 w-11 rounded-full bg-ink-600 transition aria-checked:bg-amber">
+        <span class="absolute left-1 top-1 size-4 rounded-full bg-cream transition-transform group-aria-checked:translate-x-5 group-aria-checked:bg-ink-950"></span>
+      </button>
+      <span id="lbl-y" class="text-mist-400">Yearly</span>
+      <span class="tag rounded-full bg-amber/15 px-2 py-1 text-amber-soft">2 months free</span>
+    </div>
+  </div>
+
+  <div class="mt-14 grid items-stretch gap-5 md:grid-cols-3">
+    {plans.map((p) => (
+      <article class:list={['relative flex flex-col rounded-[28px] p-2', p.featured ? 'bg-cream text-ink-950 shadow-[0_30px_80px_-20px_rgba(244,166,74,0.35)]' : 'bg-ink-900 ring-1 ring-white/[0.07] md:mt-9']} data-reveal>
+        {p.featured && (
+          <div class="-mx-2 -mt-2 mb-1 rounded-t-[28px] bg-gradient-to-r from-amber via-amber-soft to-ember py-2 text-center text-[12px] font-semibold text-ink-950">
+            Most popular with studios
+          </div>
+        )}
+        <div class="flex flex-1 flex-col p-5">
+          <span class:list={['grid size-10 place-items-center rounded-xl', p.featured ? 'bg-ink-950 text-amber' : 'bg-white/5 text-amber-soft ring-1 ring-white/10']}><Icon name={p.icon} class="size-5" /></span>
+          <h3 class="mt-7 text-[18px] font-semibold">{p.name}</h3>
+          <p class:list={['mt-1 text-[13px]', p.featured ? 'text-ink-500' : 'text-mist-400']}>{p.desc}</p>
+          <p class="mt-6 flex items-end gap-2">
+            <span class="text-[44px] font-semibold leading-none tracking-tight">$<span data-price data-m={p.monthly} data-y={p.yearly}>{p.monthly}</span></span>
+            <span class:list={['mb-1 text-[12px]', p.featured ? 'text-ink-500' : 'text-mist-400']}>/ month</span>
+            <span class:list={['tag mb-1.5 ml-auto gap-1', p.featured ? 'bg-ink-950 text-cream' : 'bg-ink-700 text-mist-200']}><Icon name="users" class="size-3" />{p.badge}</span>
+          </p>
+          <hr class:list={['my-6', p.featured ? 'border-ink-950/10' : 'border-white/10']} />
+          <ul class="flex-1 space-y-3 text-[13px]">
+            {p.features.map((f) => (
+              <li class="flex items-center gap-2.5">
+                <span class:list={['grid size-4 place-items-center rounded-full', p.featured ? 'bg-ink-950 text-amber' : 'bg-amber/15 text-amber']}><Icon name="check" class="size-2.5" /></span>
+                <span class={p.featured ? 'text-ink-700' : 'text-mist-200'}>{f}</span>
+              </li>
+            ))}
+          </ul>
+          <a href="/signup" class:list={['mt-10 justify-center !py-3', p.featured ? 'btn-dark' : 'btn-light']}>Start free trial <Icon name="arrow" class="size-3.5" /></a>
+          <p class:list={['mt-3 text-center text-[11px]', p.featured ? 'text-ink-500' : 'text-mist-400']}>14 days free. Cancel anytime.</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<script>
+  const t = document.getElementById('bill-toggle')!;
+  const prices = document.querySelectorAll<HTMLElement>('#pricing [data-price]');
+  const lm = document.getElementById('lbl-m')!, ly = document.getElementById('lbl-y')!;
+  t.addEventListener('click', () => {
+    const yearly = t.getAttribute('aria-checked') !== 'true';
+    t.setAttribute('aria-checked', String(yearly));
+    lm.classList.toggle('text-white', !yearly); lm.classList.toggle('text-mist-400', yearly);
+    ly.classList.toggle('text-white', yearly); ly.classList.toggle('text-mist-400', !yearly);
+    prices.forEach((p) => {
+      p.animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }], { duration: 300, easing: 'ease-out' });
+      p.textContent = yearly ? p.dataset.y! : p.dataset.m!;
+    });
+  });
+</script>

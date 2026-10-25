@@ -1,0 +1,28 @@
+---
+import { unsplash, srcset } from '../data/images';
+interface Props {
+  id: string;
+  alt: string;
+  widths?: number[];
+  sizes?: string;
+  class?: string;
+  eager?: boolean;
+  width?: number;
+  height?: number;
+  q?: number;
+}
+const { id, alt, widths = [640, 960, 1280, 1920], sizes = '100vw', class: cls = '', eager = false, width = 1920, height = 1280, q = 70 } = Astro.props;
+---
+<img
+  src={unsplash(id, widths[Math.min(2, widths.length - 1)], q)}
+  srcset={srcset(id, widths, q)}
+  sizes={sizes}
+  alt={alt}
+  width={width}
+  height={height}
+  loading={eager ? 'eager' : 'lazy'}
+  decoding={eager ? 'sync' : 'async'}
+  fetchpriority={eager ? 'high' : 'auto'}
+  onerror="this.style.visibility='hidden'"
+  class={cls}
+/>

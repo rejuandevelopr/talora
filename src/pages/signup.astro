@@ -1,0 +1,9 @@
+---
+import AuthLayout from '../layouts/AuthLayout.astro';
+import Signup from '../app/auth/Signup';
+---
+<AuthLayout title="Create your workspace">
+  <Signup client:only="react">
+    <div slot="fallback" class="space-y-4"><div class="skeleton h-9 w-56"></div><div class="skeleton h-4 w-72"></div><div class="skeleton mt-6 h-12"></div><div class="skeleton h-10"></div><div class="skeleton h-10"></div><div class="skeleton h-10"></div></div>
+  </Signup>
+</AuthLayout>

@@ -1,0 +1,116 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import type { LegalSection } from '../components/LegalPage.astro';
+
+const sections: LegalSection[] = [
+  {
+    id: 'overview',
+    title: 'Who we are',
+    body: [
+      'Talora is operated by Talora Inc. and its European subsidiary Talora Unipessoal Lda, registered in Lisbon, Portugal. In this policy, "Talora", "we" and "us" refer to both companies. We provide a client workspace that studios and agencies use to manage clients, projects, approvals, invoices and time.',
+      'This policy explains what personal data we collect, why we collect it, how long we keep it and the choices you have. It applies to talora.app, the Talora web application, client portals hosted by Talora and any related support or marketing communication.',
+    ],
+  },
+  {
+    id: 'roles',
+    title: 'Our role: controller and processor',
+    body: [
+      'When you create an account, browse our website or talk to our team, Talora is the <strong>controller</strong> of your personal data.',
+      'When a studio uses Talora to store information about its own clients, such as contact details, project files, messages or invoices, that studio is the controller and Talora acts as a <strong>processor</strong> on its behalf. We only process that data to provide the service, under the terms of our Data Processing Addendum. If you are a client of a studio that uses Talora, please contact that studio first with any privacy request.',
+    ],
+  },
+  {
+    id: 'data-we-collect',
+    title: 'Information we collect',
+    body: ['We collect only what we need to run and improve Talora:'],
+    list: [
+      '<strong>Account information</strong> such as your name, work email, password hash, studio name, role and profile photo.',
+      '<strong>Workspace content</strong> you or your team add, including clients, projects, tasks, files, comments, briefs, time entries and invoices.',
+      '<strong>Billing details</strong> such as billing address, tax ID and the last four digits of your card. Full card numbers are handled by Stripe and never touch our servers.',
+      '<strong>Usage data</strong> such as pages viewed, features used, device type, browser, approximate location from IP address and error logs.',
+      '<strong>Communications</strong> you send us by email, chat, the contact form or support tickets.',
+    ],
+  },
+  {
+    id: 'how-we-use',
+    title: 'How we use information',
+    body: ['We use personal data to provide, secure and improve Talora. Specifically, we use it to:'],
+    list: [
+      'Create and maintain your account and workspace, and authenticate you when you sign in.',
+      'Deliver core features, such as sending client portal invitations, invoice reminders and approval notifications.',
+      'Process payments, prevent fraud and meet our tax and accounting obligations.',
+      'Respond to support requests and send important service notices, such as security alerts or changes to these terms.',
+      'Understand how features are used in aggregate so we can fix problems and decide what to build next.',
+      'Send product updates and newsletters if you have opted in. You can unsubscribe from any email in one click.',
+    ],
+  },
+  {
+    id: 'ai',
+    title: 'AI features',
+    body: [
+      'Talora offers optional AI features, such as drafting briefs from call notes or suggesting quote line items. When you use them, the relevant content is sent to our AI subprocessors to generate a response and is returned to your workspace.',
+      'We do not use your workspace content to train AI models, and our agreements with AI providers prohibit them from doing so or retaining your content beyond what is needed to return a result, typically no more than 30 days for abuse monitoring. Workspace admins can switch AI features off for the whole studio in Settings.',
+    ],
+  },
+  {
+    id: 'legal-bases',
+    title: 'Legal bases for processing',
+    body: [
+      'If you are in the European Economic Area, the United Kingdom or Switzerland, we rely on the following legal bases: <strong>contract</strong>, to provide the service you signed up for; <strong>legitimate interests</strong>, to secure, analyse and improve Talora in ways you would reasonably expect; <strong>legal obligation</strong>, for tax, accounting and regulatory requirements; and <strong>consent</strong>, for marketing emails and non essential cookies, which you can withdraw at any time.',
+    ],
+  },
+  {
+    id: 'sharing',
+    title: 'Sharing and subprocessors',
+    body: [
+      'We do not sell personal data, and we do not share it for cross context behavioural advertising. We share data only with trusted service providers who help us run Talora, such as cloud hosting, payment processing, email delivery, customer support tooling and AI providers. Each is bound by a written agreement that limits how they can use the data.',
+      'A current list of subprocessors, their location and their purpose is available on request from <a href="mailto:privacy@talora.app">privacy@talora.app</a>. We give workspace admins at least 30 days notice before adding a new subprocessor that handles workspace content.',
+    ],
+  },
+  {
+    id: 'security',
+    title: 'Security',
+    body: [
+      'Security is part of the product, not an afterthought. All data is encrypted in transit with TLS 1.2 or higher and at rest with AES 256. Production systems run in isolated environments with the EU region hosted in Frankfurt and the US region in Virginia, and data is backed up hourly with encrypted backups kept for 35 days.',
+      'Access to production data is limited to a small number of engineers, protected by hardware security keys and single sign on, and every access is logged and reviewed. We run automated vulnerability scanning on every release, commission an independent penetration test every year and are working towards SOC 2 Type II certification.',
+      'Customers can protect their own workspaces with two factor authentication, and Agency plans add SAML single sign on, custom roles and a 12 month audit log. If you believe you have found a security issue, please email <a href="mailto:security@talora.app">security@talora.app</a>. We respond to reports within one business day and will never take legal action against good faith research.',
+    ],
+  },
+  {
+    id: 'retention',
+    title: 'Retention and international transfers',
+    body: [
+      'We keep workspace content for as long as your workspace is active. When a subscription ends, the workspace becomes read only for 90 days so you can export your data, then it is permanently deleted from our systems and removed from backups within a further 35 days. Billing records are kept for as long as tax law requires, usually ten years in Portugal.',
+      'Where personal data is transferred outside the EEA or UK, we rely on the European Commission Standard Contractual Clauses, the UK International Data Transfer Addendum or an adequacy decision, together with additional safeguards such as encryption.',
+    ],
+  },
+  {
+    id: 'your-rights',
+    title: 'Your rights and choices',
+    body: [
+      'Depending on where you live, you may have the right to access, correct, export or delete your personal data, to object to or restrict certain processing, and to withdraw consent. California residents have the right to know, delete and correct, and the right not to be discriminated against for exercising these rights.',
+      'You can update most account information directly in Settings, and export your workspace at any time. For anything else, email <a href="mailto:privacy@talora.app">privacy@talora.app</a>. We will verify your request and reply within 30 days. You also have the right to lodge a complaint with your local data protection authority, which in Portugal is the Comissão Nacional de Proteção de Dados.',
+    ],
+  },
+  {
+    id: 'changes',
+    title: 'Changes and contact',
+    body: [
+      'We may update this policy as Talora grows. If a change is significant, we will notify workspace admins by email and in the app at least 30 days before it takes effect. The date at the top of this page always shows when the policy last changed.',
+      'Our Data Protection Officer can be reached at <a href="mailto:privacy@talora.app">privacy@talora.app</a> or by post at Talora Unipessoal Lda, Rua da Boavista 72, 3rd floor, 1200-066 Lisbon, Portugal.',
+    ],
+  },
+];
+---
+<LegalPage
+  metaTitle="Privacy policy | Talora"
+  description="How Talora collects, uses and protects personal data for studios, agencies and their clients."
+  title="Privacy"
+  accent="policy"
+  updated="October 1, 2026"
+  updatedIso="2026-10-01"
+  intro="Plain language about what we collect, why we collect it and how we keep it safe. Your client relationships are yours, and we treat them that way."
+  sections={sections}
+  photo="desertRoad"
+  other={{ label: 'Read the terms of service', href: '/terms' }}
+/>

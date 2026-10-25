@@ -1,0 +1,28 @@
+---
+import '@fontsource-variable/manrope';
+import '@fontsource-variable/fraunces/opsz-italic.css';
+import '../styles/global.css';
+
+interface Props { title: string }
+const { title } = Astro.props;
+---
+<!doctype html>
+<html lang="en" class="bg-ink-950">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#08070a" />
+    <meta name="robots" content="noindex" />
+    <title>{title} · Talora</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+  </head>
+  <body class="min-h-dvh overflow-x-hidden bg-ink-950 text-white">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] btn-light">Skip to content</a>
+    <div class="pointer-events-none fixed inset-x-0 top-0 -z-0 h-[520px] bg-[radial-gradient(55%_100%_at_50%_0%,rgba(244,166,74,0.09),transparent)]" aria-hidden="true"></div>
+    <div class="relative">
+      <slot />
+    </div>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import Avatar from '../components/Avatar.astro';
+import { people } from '../data/images';
+
+const field = 'w-full rounded-xl bg-ink-850 px-3.5 py-2.5 text-[13.5px] text-white outline-none ring-1 ring-white/[0.08] transition placeholder:text-white/35 hover:ring-white/15 focus:ring-2 focus:ring-amber/60 aria-[invalid=true]:ring-ember/70';
+const labelCls = 'mb-1.5 block text-[12px] font-medium text-mist-300';
+
+const cards = [
+  { icon: 'briefcase', title: 'Sales', text: 'Plans, pricing and team rollouts.', link: ['sales@talora.app', 'mailto:sales@talora.app'] },
+  { icon: 'message', title: 'Support', text: 'Help with your workspace or portal.', link: ['help@talora.app', 'mailto:help@talora.app'] },
+  { icon: 'flag', title: 'Office', text: 'Rua da Boavista 72, 3rd floor, 1200-066 Lisbon, Portugal', link: ['Get directions', 'https://maps.google.com/?q=Rua+da+Boavista+72+Lisbon'] },
+  { icon: 'clock', title: 'Response time', text: 'Usually within 4 hours, Monday to Friday, 8:00 to 20:00 WET.', link: null },
+];
+---
+<Base title="Contact | Talora" description="Talk to the Talora team about sales, support, partnerships or press. We usually reply within a few hours.">
+  <SiteNav />
+  <PageHero
+    label="Contact"
+    title="Let us"
+    accent="talk"
+    titleEnd="."
+    subtitle="Questions about plans, a tricky migration or a partnership idea? Send us a note and a real person on the team will reply."
+    photo="valley"
+    position="object-[50%_55%]"
+  />
+
+  <main id="main" class="container-x py-20 sm:py-28">
+    <div class="grid gap-6 lg:grid-cols-[1.45fr_1fr] lg:gap-8">
+      <section class="rounded-[28px] bg-ink-900 p-6 ring-1 ring-white/[0.07] sm:p-10" data-reveal aria-labelledby="form-title">
+        <div id="contact-form-wrap">
+          <h2 id="form-title" class="text-2xl font-medium tracking-[-0.03em] sm:text-[30px]">Send us a <span class="serif-accent text-amber-soft">message</span></h2>
+          <p class="mt-2 text-[14px] text-mist-400">Fields marked with an asterisk are required.</p>
+
+          <form id="contact-form" novalidate class="mt-8 grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="c-name" class={labelCls}>Full name *</label>
+              <input id="c-name" name="name" type="text" required autocomplete="name" placeholder="Sam Rivera" class={field} aria-describedby="c-name-err" />
+              <p id="c-name-err" class="err mt-1.5 hidden text-[12px] text-ember">Please tell us your name.</p>
+            </div>
+            <div>
+              <label for="c-email" class={labelCls}>Work email *</label>
+              <input id="c-email" name="email" type="email" required autocomplete="email" placeholder="sam@duneandco.com" class={field} aria-describedby="c-email-err" />
+              <p id="c-email-err" class="err mt-1.5 hidden text-[12px] text-ember">Please enter a valid email address.</p>
+            </div>
+            <div>
+              <label for="c-company" class={labelCls}>Company</label>
+              <input id="c-company" name="company" type="text" autocomplete="organization" placeholder="Dune & Co" class={field} />
+            </div>
+            <div>
+              <label for="c-size" class={labelCls}>Team size</label>
+              <div class="relative">
+                <select id="c-size" name="size" class={`${field} appearance-none pr-10`}>
+                  <option>Just me</option>
+                  <option selected>2 to 10 people</option>
+                  <option>11 to 50 people</option>
+                  <option>51 to 200 people</option>
+                  <option>More than 200</option>
+                </select>
+                <Icon name="chevron" class="pointer-events-none absolute right-3.5 top-1/2 size-4 -translate-y-1/2 rotate-90 text-mist-400" />
+              </div>
+            </div>
+            <fieldset class="sm:col-span-2">
+              <legend class={labelCls}>What is this about? *</legend>
+              <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {[['Sales', 'briefcase'], ['Support', 'message'], ['Partnerships', 'link'], ['Press', 'star']].map(([t, ic], i) => (
+                  <label class="topic flex cursor-pointer items-center gap-2 rounded-xl bg-ink-850 px-3 py-2.5 text-[13px] text-mist-200 ring-1 ring-white/[0.08] transition hover:ring-white/20 has-[:checked]:bg-amber/10 has-[:checked]:text-white has-[:checked]:ring-amber/50 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-amber">
+                    <input type="radio" name="topic" value={t} checked={i === 0} class="sr-only" />
+                    <Icon name={ic} class="size-4 text-amber-soft" />{t}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+            <div class="sm:col-span-2">
+              <label for="c-msg" class={labelCls}>Message *</label>
+              <textarea id="c-msg" name="message" required rows="6" placeholder="Tell us a little about your studio and what you need." class={`${field} resize-y leading-relaxed`} aria-describedby="c-msg-err"></textarea>
+              <p id="c-msg-err" class="err mt-1.5 hidden text-[12px] text-ember">Please add a short message, at least 10 characters.</p>
+            </div>
+            <div class="flex flex-col-reverse gap-4 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+              <p class="text-[12px] leading-relaxed text-mist-400">By sending this form you agree to our <a href="/privacy" class="underline underline-offset-4 hover:text-white">privacy policy</a>.</p>
+              <button id="c-submit" type="submit" class="btn-amber justify-center !px-6 !py-3"><span id="c-submit-label">Send message</span> <Icon name="arrow" class="size-3.5" /></button>
+            </div>
+          </form>
+        </div>
+
+        <div id="contact-success" class="hidden py-10 text-center sm:py-16" role="status" aria-live="polite" tabindex="-1">
+          <span class="mx-auto grid size-14 place-items-center rounded-full bg-amber text-ink-950 shadow-[0_20px_50px_-10px_rgba(244,166,74,0.5)]"><Icon name="check" class="size-6" /></span>
+          <h2 class="mt-6 text-2xl font-medium tracking-[-0.03em] sm:text-[30px]">Thanks, <span id="s-name" class="serif-accent text-amber-soft">friend</span>. Message received.</h2>
+          <p class="mx-auto mt-3 max-w-md text-[14px] leading-relaxed text-mist-400">Our <span id="s-topic">sales</span> team will reply to <span id="s-email" class="text-white"></span> within about 4 hours on weekdays. In the meantime, have a look around the live demo.</p>
+          <div class="mt-8 flex flex-wrap justify-center gap-3">
+            <a href="/app" class="btn-light !px-5 !py-2.5">Explore the demo <Icon name="arrow" class="size-3.5" /></a>
+            <button id="c-again" type="button" class="btn-ghost !px-5 !py-2.5">Send another message</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="flex flex-col gap-4" aria-label="Other ways to reach us">
+        <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+          {cards.map((c) => (
+            <li class="flex gap-4 rounded-[22px] bg-ink-900 p-5 ring-1 ring-white/[0.07]" data-reveal>
+              <span class="grid size-10 shrink-0 place-items-center rounded-xl bg-white/5 text-amber-soft ring-1 ring-white/10"><Icon name={c.icon} class="size-[18px]" /></span>
+              <div class="min-w-0">
+                <h3 class="text-[14px] font-semibold">{c.title}</h3>
+                <p class="mt-1 text-[13px] leading-relaxed text-mist-400">{c.text}</p>
+                {c.link && (
+                  <a href={c.link[1]} class="mt-2 inline-flex items-center gap-1 text-[13px] font-medium text-amber-soft hover:text-amber" {...(c.link[1].startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}>{c.link[0]}</a>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <div class="relative isolate overflow-hidden rounded-[22px] bg-cream p-6 text-ink-950" data-reveal>
+          <div class="absolute -right-12 -top-12 -z-10 h-40 w-40 rounded-full bg-amber/40 blur-[60px]" aria-hidden="true"></div>
+          <div class="flex -space-x-2">
+            <Avatar id={people.maya} name="Clara Novak" size={32} class="ring-2 ring-cream" />
+            <Avatar id={people.noah} name="Ravi Menon" size={32} class="ring-2 ring-cream" />
+            <Avatar id={people.sara} name="Inês Carvalho" size={32} class="ring-2 ring-cream" />
+          </div>
+          <h3 class="mt-4 text-[20px] font-semibold tracking-tight">Book a demo, or skip the call</h3>
+          <p class="mt-1.5 text-[13px] leading-relaxed text-ink-500">Open a fully working Talora workspace with sample clients, projects and invoices. No sign up needed.</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            <a href="/app" class="btn-dark !px-4 !py-2.5"><Icon name="play" class="size-3 fill-current" />Open the live demo</a>
+            <a href="mailto:sales@talora.app?subject=Talora%20demo" class="inline-flex items-center gap-1.5 rounded-full px-3 py-2.5 text-[13px] font-semibold text-ink-700 hover:text-ink-950">Book a call <Icon name="arrow" class="size-3.5" /></a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <SiteFooter />
+</Base>
+
+<script is:inline>
+  (function () {
+    var form = document.getElementById('contact-form');
+    var wrap = document.getElementById('contact-form-wrap');
+    var done = document.getElementById('contact-success');
+    var btn = document.getElementById('c-submit');
+    if (!form) return;
+    var checks = [
+      ['c-name', function (v) { return v.trim().length > 1; }],
+      ['c-email', function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }],
+      ['c-msg', function (v) { return v.trim().length >= 10; }],
+    ];
+    function validate(id, fn) {
+      var el = document.getElementById(id);
+      var ok = fn(el.value);
+      el.setAttribute('aria-invalid', ok ? 'false' : 'true');
+      document.getElementById(id + '-err').classList.toggle('hidden', ok);
+      return ok;
+    }
+    checks.forEach(function (c) {
+      document.getElementById(c[0]).addEventListener('blur', function () { if (this.value) validate(c[0], c[1]); });
+      document.getElementById(c[0]).addEventListener('input', function () { if (this.getAttribute('aria-invalid') === 'true') validate(c[0], c[1]); });
+    });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var firstBad = null;
+      checks.forEach(function (c) { if (!validate(c[0], c[1]) && !firstBad) firstBad = c[0]; });
+      if (firstBad) { document.getElementById(firstBad).focus(); return; }
+      btn.disabled = true;
+      btn.classList.add('opacity-70');
+      document.getElementById('c-submit-label').textContent = 'Sending';
+      setTimeout(function () {
+        var data = new FormData(form);
+        var name = String(data.get('name') || '').trim().split(' ')[0];
+        document.getElementById('s-name').textContent = name || 'friend';
+        document.getElementById('s-email').textContent = String(data.get('email') || '').trim();
+        document.getElementById('s-topic').textContent = String(data.get('topic') || 'Sales').toLowerCase();
+        wrap.classList.add('hidden');
+        done.classList.remove('hidden');
+        done.focus();
+      }, 700);
+    });
+    document.getElementById('c-again').addEventListener('click', function () {
+      form.reset();
+      checks.forEach(function (c) { document.getElementById(c[0]).removeAttribute('aria-invalid'); });
+      btn.disabled = false;
+      btn.classList.remove('opacity-70');
+      document.getElementById('c-submit-label').textContent = 'Send message';
+      done.classList.add('hidden');
+      wrap.classList.remove('hidden');
+      document.getElementById('c-name').focus();
+    });
+  })();
+</script>

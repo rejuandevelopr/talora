@@ -1,0 +1,9 @@
+---
+import AppLayout from '../../layouts/AppLayout.astro';
+import Settings from '../../app/pages/Settings';
+---
+<AppLayout title="Settings">
+  <Settings client:only="react">
+    <div slot="fallback" class="space-y-6"><div class="skeleton h-9 w-64"></div><div class="skeleton h-[560px]"></div></div>
+  </Settings>
+</AppLayout>

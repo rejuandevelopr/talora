@@ -1,0 +1,160 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Img from '../components/Img.astro';
+import Avatar from '../components/Avatar.astro';
+import Icon from '../components/Icon.astro';
+import Cta from '../components/Cta.astro';
+import { photos, people } from '../data/images';
+
+const stats = [
+  ['2023', 'Founded in Lisbon'],
+  ['2,400+', 'Studios and agencies'],
+  ['38', 'Countries with paying customers'],
+  ['21', 'People on the team'],
+];
+
+const values = [
+  { icon: 'sparkle', title: 'Calm by default', text: 'Software should lower the temperature of a project, not raise it. We remove notifications before we add them, and every screen has to earn its place.' },
+  { icon: 'users', title: 'Clients are people too', text: 'Half of the people using Talora never pay us. We design the client portal with the same care as the studio side, because that is where trust is built.' },
+  { icon: 'bolt', title: 'Ship small, ship often', text: 'We release something useful almost every week, talk to customers every day and keep the changelog honest about what is new and what we fixed.' },
+  { icon: 'shield', title: 'Earn trust slowly', text: 'Your client list and your invoices are your livelihood. We treat security, privacy and uptime as product features, not as fine print.' },
+];
+
+const team = [
+  { name: 'Inês Carvalho', role: 'Co founder and CEO', id: people.sara },
+  { name: 'Daniel Brooks', role: 'Co founder and CTO', id: people.felix },
+  { name: 'Hana Sato', role: 'Head of Design', id: people.priya },
+  { name: 'Marco Bellini', role: 'Lead Engineer, Portal', id: people.tom },
+  { name: 'Leah Mendel', role: 'Product Manager, Money', id: people.elena },
+  { name: 'Kwame Asante', role: 'Machine Learning Engineer', id: people.leo },
+  { name: 'Clara Novak', role: 'Customer Success Lead', id: people.maya },
+  { name: 'Ravi Menon', role: 'Head of Growth', id: people.noah },
+];
+
+const investors = [
+  { name: 'Meridian Ventures', cls: 'font-serif italic text-xl' },
+  { name: 'NORTHSTAR', cls: 'tracking-[0.28em] text-sm font-semibold' },
+  { name: 'Atlas Seed', cls: 'font-bold text-lg tracking-tight' },
+  { name: 'tidewater', cls: 'font-extrabold lowercase text-lg tracking-tight' },
+  { name: 'Crescent Capital', cls: 'font-light uppercase tracking-[0.12em] text-base' },
+];
+---
+<Base title="About | Talora" description="Talora is a small team in Lisbon building the calm client workspace we always wanted when we ran our own studios.">
+  <SiteNav />
+  <PageHero
+    label="About Talora"
+    title="Built by studio people, for"
+    accent="studio people"
+    titleEnd="."
+    subtitle="We spent a decade running design studios and agencies. Talora is the workspace we wished we had on every one of those projects."
+    photo="canyonRoad"
+    position="object-[50%_60%]"
+  />
+
+  <main id="main">
+    <section class="container-x py-24 sm:py-32" aria-labelledby="story-title">
+      <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+        <div data-reveal>
+          <h2 id="story-title" class="text-3xl font-medium leading-[1.1] tracking-[-0.035em] text-balance sm:text-[42px]">It started with a <span class="serif-accent text-amber-soft">spreadsheet</span> called final_v7.</h2>
+          <div class="mt-6 space-y-4 text-[15px] leading-relaxed text-mist-300">
+            <p>Inês and Daniel met in 2016 at a branding studio in Porto. Inês ran client relationships, Daniel ran everything technical, and both of them lost a little piece of every week to the same problem: work lived in one tool, feedback in another, invoices in a third and the real status of a project lived only in somebody's head.</p>
+            <p>By 2022 they were running their own studio of twelve people and stitching together seven apps to keep clients informed. The spreadsheet that held it all together was called final_v7. That was the moment they decided to build something better.</p>
+            <p>Talora launched in Lisbon in 2023 with a simple idea. Give studios one calm place for clients, projects, approvals and payments, and give their clients a portal that feels as considered as the work itself. Today it is used by more than 2,400 studios in 38 countries.</p>
+          </div>
+          <div class="mt-8 flex items-center gap-4 border-t border-white/[0.07] pt-6">
+            <span class="flex -space-x-2">
+              <Avatar id={people.sara} name="Inês Carvalho" size={36} class="ring-2 ring-ink-950" />
+              <Avatar id={people.felix} name="Daniel Brooks" size={36} class="ring-2 ring-ink-950" />
+            </span>
+            <p class="text-[13px] leading-snug"><span class="font-semibold">Inês Carvalho and Daniel Brooks</span><br /><span class="text-mist-400">Co founders of Talora</span></p>
+          </div>
+        </div>
+        <div class="img-shell relative isolate h-[420px] overflow-hidden rounded-[28px] ring-1 ring-white/[0.07] sm:h-[560px]" data-reveal>
+          <Img id={photos.valley} alt="Warm valley landscape at dusk" widths={[640, 960, 1280]} sizes="(min-width: 1024px) 680px, 100vw" class="absolute inset-0 -z-10 size-full object-cover" />
+          <div class="absolute inset-0 -z-10 bg-gradient-to-t from-ink-950/85 via-ink-950/10 to-transparent"></div>
+          <figure class="absolute inset-x-5 bottom-5 rounded-2xl glass p-5 sm:inset-x-7 sm:bottom-7">
+            <blockquote class="text-[15px] leading-relaxed text-white/90">"We wanted clients to feel looked after, and studios to feel less stretched. Everything we build still comes back to those two feelings."</blockquote>
+            <figcaption class="mt-3 text-[12px] text-mist-400">Inês Carvalho, CEO</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="container-x" aria-label="Talora in numbers">
+      <dl class="grid grid-cols-2 overflow-hidden rounded-[24px] bg-ink-900 ring-1 ring-white/[0.07] lg:grid-cols-4" data-reveal>
+        {stats.map(([v, k], i) => (
+          <div class:list={['p-6 sm:p-8', i % 2 === 1 && 'border-l border-white/[0.06]', i >= 2 && 'border-t border-white/[0.06] lg:border-t-0', i === 2 && 'lg:border-l']}>
+            <dt class="sr-only">{k}</dt>
+            <dd class="text-4xl font-semibold tracking-tight sm:text-5xl">{v}</dd>
+            <dd class="mt-2 text-[13px] text-mist-400">{k}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="container-x py-24 sm:py-32" aria-label="Our values">
+      <SectionHead title="What we" accent="believe" text="Four ideas guide how we build Talora, who we hire and which features we say no to." />
+      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {values.map((v, i) => (
+          <article class="group flex flex-col rounded-[24px] bg-ink-900 p-6 ring-1 ring-white/[0.07] transition hover:ring-amber/30" data-reveal style={`transition-delay:${i * 60}ms`}>
+            <span class="grid size-10 place-items-center rounded-xl bg-white/5 text-amber-soft ring-1 ring-white/10 transition group-hover:bg-amber group-hover:text-ink-950"><Icon name={v.icon} class="size-5" /></span>
+            <p class="mt-8 font-serif text-[13px] italic text-mist-400">0{i + 1}</p>
+            <h3 class="mt-1 text-[18px] font-semibold tracking-tight">{v.title}</h3>
+            <p class="mt-2 text-[13.5px] leading-relaxed text-mist-400">{v.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="container-x pb-24 sm:pb-32" aria-labelledby="team-title">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between" data-reveal>
+        <h2 id="team-title" class="text-3xl font-medium leading-[1.1] tracking-[-0.035em] sm:text-[42px]">The people behind <span class="serif-accent text-amber-soft">Talora</span></h2>
+        <p class="max-w-sm text-[14px] leading-relaxed text-mist-400">A remote first team of 21, with a home base in Lisbon and teammates across nine time zones.</p>
+      </div>
+      <ul class="mt-12 grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-4">
+        {team.map((m) => (
+          <li class="rounded-[24px] bg-ink-900 p-5 ring-1 ring-white/[0.07] sm:p-6" data-reveal>
+            <Avatar id={m.id} name={m.name} size={72} class="ring-1 ring-white/10" />
+            <p class="mt-5 text-[15px] font-semibold tracking-tight">{m.name}</p>
+            <p class="mt-0.5 text-[12.5px] text-mist-400">{m.role}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="border-y border-white/[0.06] bg-ink-900/40 py-12" aria-label="Investors">
+      <div class="container-x" data-reveal>
+        <p class="text-center text-[11px] uppercase tracking-[0.2em] text-mist-400">Backed by investors who believe in independent studios</p>
+        <ul class="mt-7 flex flex-wrap items-center justify-center gap-x-14 gap-y-6 text-white/55">
+          {investors.map((i) => <li class={`whitespace-nowrap ${i.cls}`}>{i.name}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="container-x pt-24 sm:pt-32" aria-labelledby="careers-title">
+      <div class="relative isolate grid gap-8 overflow-hidden rounded-[28px] bg-ink-900 p-7 ring-1 ring-white/[0.07] sm:p-12 lg:grid-cols-[1.4fr_1fr] lg:items-end" data-reveal>
+        <div class="absolute -right-20 -top-24 -z-10 h-72 w-96 rounded-full bg-amber/15 blur-[100px]" aria-hidden="true"></div>
+        <div>
+          <p class="text-[11px] font-medium uppercase tracking-[0.22em] text-mist-400">Careers</p>
+          <h2 id="careers-title" class="mt-4 text-3xl font-medium leading-[1.1] tracking-[-0.035em] text-balance sm:text-[40px]">Help us make client work feel <span class="serif-accent text-amber-soft">lighter</span>.</h2>
+          <p class="mt-4 max-w-lg text-[14px] leading-relaxed text-mist-400">We are hiring a Senior Product Engineer, a Product Designer for the client portal and a Customer Success Manager for the Americas. Remote within Europe and the Americas, with a yearly team week in Lisbon.</p>
+        </div>
+        <div class="flex flex-col gap-3 lg:items-end">
+          <ul class="flex flex-wrap gap-2 text-[12px] text-mist-200 lg:justify-end">
+            {['Remote first', '4 day weeks in August', 'Learning budget', 'Equity for everyone'].map((t) => (
+              <li class="flex items-center gap-1.5 rounded-lg bg-white/5 px-2.5 py-1.5 ring-1 ring-white/10"><Icon name="check" class="size-3 text-amber" />{t}</li>
+            ))}
+          </ul>
+          <a href="/contact" class="btn-light mt-2 self-start !px-5 !py-2.5 lg:self-end">Get in touch about roles <Icon name="arrow" class="size-3.5" /></a>
+        </div>
+      </div>
+    </section>
+
+    <Cta />
+  </main>
+  <SiteFooter />
+</Base>

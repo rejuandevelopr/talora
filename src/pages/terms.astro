@@ -1,0 +1,110 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import type { LegalSection } from '../components/LegalPage.astro';
+
+const sections: LegalSection[] = [
+  {
+    id: 'agreement',
+    title: 'The agreement',
+    body: [
+      'These Terms of Service ("Terms") form a contract between you and Talora Inc. ("Talora", "we", "us") and govern your use of the Talora web application, client portals, APIs and related services (together, the "Service").',
+      'If you use the Service on behalf of a studio, agency or other organisation, you confirm that you have authority to accept these Terms for it, and "you" refers to that organisation. If you do not agree to these Terms, please do not use the Service.',
+    ],
+  },
+  {
+    id: 'accounts',
+    title: 'Accounts and workspaces',
+    body: [
+      'You need an account to use most of the Service. You agree to give accurate information, keep your password secure and tell us promptly at <a href="mailto:security@talora.app">security@talora.app</a> if you suspect unauthorised access. You are responsible for activity that happens under your account.',
+      'Each workspace has at least one admin who controls members, roles, billing and settings. Clients you invite to your portal may view and act on the content you share with them, but they do not count as seats and are not party to your subscription.',
+    ],
+  },
+  {
+    id: 'plans-billing',
+    title: 'Plans, trials and billing',
+    body: [
+      'Paid plans are billed in advance, monthly or yearly, per seat where the plan says so. Prices exclude taxes, which we add where required. New workspaces get a 14 day free trial of Studio features, and we will not charge you unless you choose a plan.',
+      'Upgrades take effect immediately and are prorated. Downgrades and cancellations take effect at the end of the current billing period. Except where required by law or stated in these Terms, fees are not refundable. If a payment fails, we will retry and notify you, and may limit the workspace to read only after 14 days of non payment.',
+    ],
+  },
+  {
+    id: 'payments',
+    title: 'Client payments',
+    body: [
+      'Talora lets you send invoices and accept payments from your clients through Stripe. Those payments are processed under your own Stripe account and the Stripe Services Agreement. Talora is not a party to the transaction between you and your client and does not take a fee from your invoices.',
+      'You are responsible for the accuracy of your invoices, applicable taxes, refunds and any disputes with your clients.',
+    ],
+  },
+  {
+    id: 'your-content',
+    title: 'Your content',
+    body: [
+      'You keep all rights to the content you and your clients upload to the Service, including files, briefs, comments and invoices ("Your Content"). You grant Talora a limited licence to host, copy, process and display Your Content only as needed to provide, secure and support the Service.',
+      'You confirm that you have the rights needed to upload Your Content and to share it with the people you invite. You can export Your Content at any time while your workspace is active and for 90 days after it ends.',
+    ],
+  },
+  {
+    id: 'ai-features',
+    title: 'AI features',
+    body: [
+      'Some features use artificial intelligence to generate drafts, such as briefs, quotes or client updates ("AI Output"). AI Output is provided to help you work faster, may be inaccurate or incomplete and should be reviewed before you share or rely on it. As between you and Talora, you own AI Output generated from Your Content.',
+      'We do not use Your Content to train AI models. You agree not to use AI features to generate unlawful, deceptive or harmful material.',
+    ],
+  },
+  {
+    id: 'acceptable-use',
+    title: 'Acceptable use',
+    body: ['You agree not to, and not to let anyone else:'],
+    list: [
+      'Use the Service to break the law, infringe intellectual property or privacy rights, or send spam or unsolicited messages.',
+      'Upload malware, or try to probe, scan or test the vulnerability of the Service outside our responsible disclosure programme.',
+      'Access the Service through automated means beyond our published API limits, or resell it without our written permission.',
+      'Reverse engineer the Service, except where the law expressly allows it.',
+      'Use the Service to build a competing product, or misrepresent your relationship with Talora.',
+    ],
+  },
+  {
+    id: 'availability',
+    title: 'Availability and changes',
+    body: [
+      'We work hard to keep Talora fast and available, and publish live status at status.talora.app. Agency plans include a 99.9% monthly uptime commitment with service credits described in the Service Level Agreement. We may change or improve features over time. If we remove a feature that is material to a paid plan, we will give at least 60 days notice.',
+    ],
+  },
+  {
+    id: 'termination',
+    title: 'Suspension and termination',
+    body: [
+      'You can cancel at any time from Settings. We may suspend or terminate access if you materially breach these Terms and do not fix the breach within 15 days of notice, or immediately if continued access would put the Service, other customers or the public at risk.',
+      'On termination your right to use the Service ends, and Your Content is handled as described in our <a href="/privacy">Privacy Policy</a>. Sections that by their nature should survive, including fees owed, content ownership, disclaimers and limitation of liability, will survive.',
+    ],
+  },
+  {
+    id: 'liability',
+    title: 'Warranties and liability',
+    body: [
+      'Except as expressly stated in these Terms, the Service is provided "as is" and "as available", and Talora disclaims all implied warranties, including merchantability, fitness for a particular purpose and non infringement, to the extent permitted by law.',
+      'To the fullest extent permitted by law, neither party is liable for indirect, incidental, special or consequential damages, or for lost profits or revenue. Each party\'s total liability under these Terms is limited to the amounts you paid Talora in the 12 months before the claim. These limits do not apply to your payment obligations, a party\'s indemnity obligations or liability that cannot be limited by law.',
+    ],
+  },
+  {
+    id: 'law',
+    title: 'Governing law and contact',
+    body: [
+      'If you are located in the European Economic Area or the United Kingdom, these Terms are governed by the laws of Portugal and the courts of Lisbon have jurisdiction. Otherwise, these Terms are governed by the laws of the State of Delaware, and disputes will be resolved in the state or federal courts in Wilmington, Delaware.',
+      'We may update these Terms from time to time and will give at least 30 days notice of material changes by email and in the app. Questions can be sent to <a href="mailto:legal@talora.app">legal@talora.app</a>.',
+    ],
+  },
+];
+---
+<LegalPage
+  metaTitle="Terms of service | Talora"
+  description="The terms that govern your use of Talora, the client workspace for studios and agencies."
+  title="Terms of"
+  accent="service"
+  updated="October 1, 2026"
+  updatedIso="2026-10-01"
+  intro="The agreement between your studio and Talora, written to be read. If anything is unclear, ask us and we will explain it."
+  sections={sections}
+  photo="canyonRoad"
+  other={{ label: 'Read the privacy policy', href: '/privacy' }}
+/>

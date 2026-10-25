@@ -1,0 +1,210 @@
+---
+import SectionHead from './SectionHead.astro';
+import Img from './Img.astro';
+import Icon from './Icon.astro';
+import Avatar from './Avatar.astro';
+import { photos, people } from '../data/images';
+
+const tabs = [
+  { label: 'Clients', icon: 'users' },
+  { label: 'Timelines', icon: 'calendar' },
+  { label: 'Approvals', icon: 'check' },
+  { label: 'Invoices & Time', icon: 'receipt' },
+];
+
+const clients = [
+  { name: 'Kiln Studio', project: 'Spring rebrand', status: 'In review', budget: '$18,400', owner: people.priya, active: true },
+  { name: 'Northfold', project: 'Website v3', status: 'On track', budget: '$32,000', owner: people.jonas },
+  { name: 'Oakhaus', project: 'Campaign shoot', status: 'On track', budget: '$9,750', owner: people.tom },
+  { name: 'Lumen & Co', project: 'App onboarding', status: 'At risk', budget: '$21,300', owner: people.elena },
+  { name: 'Fieldwork', project: 'Annual report', status: 'Done', budget: '$7,200', owner: people.noah },
+  { name: 'Vantage', project: 'Pitch deck', status: 'On track', budget: '$4,800', owner: people.maya },
+  { name: 'Parallel', project: 'Design system', status: 'In review', budget: '$26,500', owner: people.leo },
+  { name: 'Studio Mono', project: 'Retainer Q4', status: 'On track', budget: '$12,000', owner: people.sara },
+];
+const statusTag: Record<string, string> = {
+  'On track': 'bg-emerald-500/15 text-emerald-300',
+  'In review': 'bg-amber/15 text-amber-soft',
+  'At risk': 'bg-ember/20 text-orange-300',
+  Done: 'bg-white/10 text-mist-300',
+};
+const tasks = [
+  { t: 'Finalize packaging dielines', tag: 'Design', done: true },
+  { t: 'Share round 2 with Amara', tag: 'Client' },
+  { t: 'Photograph sample mugs', tag: 'Shoot' },
+  { t: 'Prepare launch site copy', tag: 'Copy' },
+];
+const sideIcons = ['grid', 'users', 'calendar', 'check', 'receipt', 'clock', 'message', 'chart', 'settings'];
+const gantt = [
+  ['Kiln Studio', 0, 45, 'bg-amber'],
+  ['Northfold', 15, 70, 'bg-cream'],
+  ['Oakhaus', 35, 30, 'bg-amber-soft'],
+  ['Lumen & Co', 10, 55, 'bg-ember'],
+  ['Parallel', 50, 45, 'bg-white/60'],
+] as const;
+---
+<section id="features" class="container-x py-24 sm:py-32">
+  <SectionHead title="One workspace for the whole" accent="client journey" text="Clients, timelines, feedback and payments live side by side, so nobody has to dig through email threads to know where things stand." />
+
+  <div class="mt-12 flex justify-center" data-reveal>
+    <div role="tablist" aria-label="Feature tabs" class="flex max-w-full gap-1 overflow-x-auto rounded-full bg-ink-900 p-1.5 ring-1 ring-white/[0.07] [scrollbar-width:none]">
+      {tabs.map((t, i) => (
+        <button role="tab" id={`ft-tab-${i}`} aria-controls={`ft-panel-${i}`} aria-selected={i === 0 ? 'true' : 'false'} data-ftab={i}
+          class="flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-[13px] font-medium text-mist-300 transition hover:text-white aria-selected:bg-cream aria-selected:text-ink-950">
+          <Icon name={t.icon} class="size-3.5" />{t.label}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="img-shell relative isolate mt-10 overflow-hidden rounded-[28px] px-3 pt-10 sm:px-10 sm:pt-16" data-reveal>
+    <Img id={photos.desertRoad} alt="" widths={[640, 1280, 1920]} sizes="(min-width: 1240px) 1200px, 100vw" class="absolute inset-0 -z-10 size-full object-cover" />
+    <div class="absolute inset-0 -z-10 bg-ink-950/40"></div>
+    <div class="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-ink-950 to-transparent"></div>
+
+    <div class="mx-auto flex h-[470px] max-w-[1180px] overflow-hidden rounded-t-2xl bg-ink-900/95 shadow-2xl shadow-black/60 ring-1 ring-white/10 sm:h-[550px]">
+      <aside class="hidden w-14 shrink-0 flex-col items-center gap-3.5 border-r border-white/5 py-5 text-mist-400 sm:flex">
+        <svg viewBox="0 0 24 24" class="mb-3 size-6" aria-hidden="true"><path d="M12 3a9 9 0 0 1 9 9h-9z" fill="#f4a64a"/><path d="M12 21a9 9 0 0 1-9-9h9z" fill="#f5eee3"/></svg>
+        {sideIcons.map((n, i) => <span class:list={['grid size-8 place-items-center rounded-lg', i === 1 && 'bg-amber/15 text-amber']}><Icon name={n} class="size-4" /></span>)}
+      </aside>
+
+      <div class="min-w-0 flex-1 p-4 sm:p-6">
+        <!-- 0 Clients -->
+        <div id="ft-panel-0" role="tabpanel" aria-labelledby="ft-tab-0" data-fpanel="0" class="fpanel">
+          <div class="flex items-center justify-between gap-3">
+            <div><h3 class="text-[17px] font-semibold">Clients</h3><p class="text-[11px] text-mist-400">8 active · $131,950 in pipeline</p></div>
+            <span class="flex items-center gap-2 rounded-lg bg-ink-700 px-2.5 py-1.5 text-[11px] text-mist-400"><Icon name="search" class="size-3.5" />Search</span>
+          </div>
+          <div class="mt-4 inline-flex rounded-full bg-ink-700 p-1 text-[11px]"><span class="rounded-full bg-ink-500 px-3 py-1">All</span><span class="px-3 py-1 text-mist-400">Retainers</span><span class="px-3 py-1 text-mist-400">Projects</span></div>
+          <div class="mt-4 overflow-hidden rounded-xl ring-1 ring-white/5">
+            <table class="w-full text-left text-[11px]">
+              <thead class="bg-ink-800 text-mist-400"><tr><th class="px-3 py-2.5 font-medium">Client</th><th class="hidden px-3 py-2.5 font-medium md:table-cell">Project</th><th class="px-3 py-2.5 font-medium">Status</th><th class="hidden px-3 py-2.5 font-medium sm:table-cell">Budget</th><th class="hidden px-3 py-2.5 font-medium md:table-cell">Lead</th></tr></thead>
+              <tbody>
+                {clients.map((c) => (
+                  <tr class:list={['border-t border-white/5', c.active ? 'bg-amber/[0.07] text-white' : 'text-mist-300']}>
+                    <td class="px-3 py-2.5"><span class="flex items-center gap-2"><span class="grid size-5 place-items-center rounded-md bg-ink-600 font-serif text-[10px] italic text-cream">{c.name[0]}</span>{c.name}</span></td>
+                    <td class="hidden px-3 py-2.5 md:table-cell">{c.project}</td>
+                    <td class="px-3 py-2.5"><span class:list={['tag', statusTag[c.status]]}>{c.status}</span></td>
+                    <td class="hidden px-3 py-2.5 tabular-nums sm:table-cell">{c.budget}</td>
+                    <td class="hidden px-3 py-2.5 md:table-cell"><Avatar id={c.owner} name="Project lead" size={20} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 1 Timelines -->
+        <div id="ft-panel-1" role="tabpanel" aria-labelledby="ft-tab-1" data-fpanel="1" class="fpanel hidden">
+          <h3 class="text-[17px] font-semibold">Timelines</h3><p class="text-[11px] text-mist-400">October to December</p>
+          <div class="mt-5 rounded-xl bg-ink-800 p-4 pt-3 ring-1 ring-white/5">
+            <div class="mb-3 grid grid-cols-[90px_1fr] text-[10px] text-mist-400"><span></span><span class="grid grid-cols-3"><span>Oct</span><span>Nov</span><span>Dec</span></span></div>
+            <ul class="relative mt-3 space-y-3.5">
+              <li aria-hidden="true" class="pointer-events-none absolute -bottom-1 -top-1 w-px bg-amber/80" style="left:calc(90px + (100% - 90px) * 0.38)"><span class="absolute -top-4 -translate-x-1/2 rounded bg-amber px-1 text-[8px] font-semibold text-ink-950">Today</span></li>
+              {gantt.map(([n, start, width, color]) => (
+                <li class="grid grid-cols-[90px_1fr] items-center text-[11px] text-mist-300"><span class="truncate">{n}</span>
+                  <span class="relative h-5 rounded-md bg-ink-700"><span class={`absolute inset-y-0 rounded-md ${color}`} style={`left:${start}%;width:${width}%`}></span></span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="mt-4 grid grid-cols-3 gap-3">
+            {[['Due this week', '6'], ['On track', '84%'], ['Hours logged', '312']].map(([k, v]) => (
+              <div class="rounded-xl bg-ink-800 p-3 ring-1 ring-white/5"><p class="text-[10px] text-mist-400">{k}</p><p class="mt-1 text-xl font-semibold">{v}</p></div>
+            ))}
+          </div>
+        </div>
+
+        <!-- 2 Approvals -->
+        <div id="ft-panel-2" role="tabpanel" aria-labelledby="ft-tab-2" data-fpanel="2" class="fpanel hidden">
+          <h3 class="text-[17px] font-semibold">Approvals</h3><p class="text-[11px] text-mist-400">3 waiting on clients</p>
+          <ul class="mt-5 space-y-3">
+            {[
+              ['Packaging round 2', 'Kiln Studio', 'Approved', people.amara, 'from-amber/80 to-ember/70'],
+              ['Homepage hero', 'Northfold', 'Changes requested', people.jonas, 'from-cream to-amber-soft/60'],
+              ['Onboarding flow', 'Lumen & Co', 'Waiting', people.elena, 'from-ink-500 to-ink-700'],
+              ['Report cover', 'Fieldwork', 'Waiting', people.noah, 'from-amber-soft/70 to-ink-600'],
+            ].map(([t, c, s, a, g]) => (
+              <li class="flex items-center gap-3 rounded-xl bg-ink-800 p-3 ring-1 ring-white/5">
+                <span class={`size-11 shrink-0 rounded-lg bg-gradient-to-br ${g}`}></span>
+                <div class="min-w-0 text-[12px]"><p class="truncate font-semibold">{t}</p><p class="text-[10px] text-mist-400">{c}</p></div>
+                <span class:list={['tag ml-auto whitespace-nowrap', s === 'Approved' ? 'bg-emerald-500/15 text-emerald-300' : s === 'Waiting' ? 'bg-white/10 text-mist-300' : 'bg-amber/15 text-amber-soft']}>{s}</span>
+                <Avatar id={a} name="Client" size={22} class="hidden sm:inline-grid" />
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- 3 Invoices -->
+        <div id="ft-panel-3" role="tabpanel" aria-labelledby="ft-tab-3" data-fpanel="3" class="fpanel hidden">
+          <h3 class="text-[17px] font-semibold">Invoices &amp; Time</h3>
+          <div class="mt-4 grid grid-cols-3 gap-3">
+            {[['Paid this month', '$48.2k', '+18%'], ['Outstanding', '$12.6k', '4 invoices'], ['Avg. days to pay', '6.4', '-3 days']].map(([k, v, d]) => (
+              <div class="rounded-xl bg-ink-800 p-3 ring-1 ring-white/5"><p class="text-[10px] text-mist-400">{k}</p><p class="mt-1 text-lg font-semibold sm:text-xl">{v}</p><p class="text-[10px] text-amber-soft">{d}</p></div>
+            ))}
+          </div>
+          <div class="mt-4 rounded-xl bg-ink-800 p-4 ring-1 ring-white/5">
+            <p class="text-[11px] text-mist-400">Revenue, last 12 weeks</p>
+            <div class="mt-4 flex h-28 items-end gap-1.5">
+              {[30, 42, 38, 55, 48, 62, 58, 70, 66, 78, 74, 92].map((h, i) => <span class:list={['flex-1 rounded-t-sm', i === 11 ? 'bg-amber' : 'bg-white/15']} style={`height:${h}%`}></span>)}
+            </div>
+          </div>
+          <ul class="mt-4 space-y-2 text-[11px] text-mist-300">
+            <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-emerald-400"></span>#0141 Northfold paid $8,000<span class="ml-auto text-mist-400">2h ago</span></li>
+            <li class="flex items-center gap-2"><span class="size-2 rounded-full bg-amber"></span>#0142 Kiln Studio sent $6,200<span class="ml-auto text-mist-400">5h ago</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- right detail panel -->
+      <aside class="hidden w-[290px] shrink-0 border-l border-white/5 bg-ink-850 p-4 lg:block" aria-label="Project preview">
+        <div class="flex items-center justify-between text-[12px]"><span class="flex items-center gap-2 font-medium"><Icon name="layers" class="size-3.5 text-amber" />Project</span><span class="grid size-6 place-items-center rounded-md bg-ink-700"><Icon name="close" class="size-3" /></span></div>
+        <div class="mt-4 rounded-xl bg-gradient-to-br from-amber/25 to-ember/10 p-3 ring-1 ring-amber/20">
+          <p class="text-[13px] font-semibold">Spring rebrand</p>
+          <p class="text-[10px] text-mist-300">Kiln Studio · Due Dec 4</p>
+          <div class="mt-3 h-1.5 rounded-full bg-ink-950/50"><div class="h-full w-[64%] rounded-full bg-amber"></div></div>
+          <p class="mt-1.5 flex justify-between text-[10px] text-mist-300"><span>64% complete</span><span>$11.8k billed</span></p>
+        </div>
+        <p class="mt-5 text-[11px] text-mist-400">Team</p>
+        <div class="mt-2 flex items-center gap-2">
+          <span class="flex -space-x-2">{[people.priya, people.tom, people.felix].map((id) => <Avatar id={id} name="Team member" size={26} class="ring-2 ring-ink-850" />)}</span>
+          <span class="text-[11px] text-mist-300">Priya, Tom, Felix</span>
+        </div>
+        <div class="mt-4 rounded-lg bg-ink-700 p-2.5 text-[11px]">
+          <p class="flex items-center gap-2 font-medium"><Icon name="list" class="size-3.5" />Tasks<span class="ml-auto text-[10px] text-mist-400">1 of 4</span></p>
+          <ul class="mt-2 space-y-1.5">
+            {tasks.map((t) => (
+              <li class="rounded-md bg-ink-800 p-2">
+                <p class="flex items-center gap-2"><span class:list={['grid size-3 place-items-center rounded-sm border', t.done ? 'border-amber bg-amber text-ink-950' : 'border-white/30']}>{t.done && <Icon name="check" class="size-2.5" />}</span><span class:list={[t.done && 'text-mist-400 line-through']}>{t.t}</span></p>
+                <p class="mt-1 flex gap-1.5 pl-5 text-[9px] text-mist-400"><span class="tag bg-ink-950 !text-[9px] text-cream">{t.tag}</span>Nov 2026</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('#features [data-ftab]');
+  const panels = document.querySelectorAll<HTMLElement>('#features [data-fpanel]');
+  const show = (i: number) => {
+    tabs.forEach((t, j) => t.setAttribute('aria-selected', String(i === j)));
+    panels.forEach((p, j) => p.classList.toggle('hidden', i !== j));
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => show(i));
+    t.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const n = (i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length;
+      tabs[n].focus(); show(n);
+    });
+  });
+</script>
+
+<style>
+  .fpanel:not(.hidden) { animation: fpanel-in .45s cubic-bezier(.2,.7,.2,1); }
+  @keyframes fpanel-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+</style>

@@ -1,0 +1,91 @@
+---
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+
+/**
+ * Fixed top navigation, aligned to the same width as every section (.container-x).
+ * overlay: used on top of the landing hero image, so no spacer is rendered.
+ * Without overlay, a spacer keeps page content from sliding under the fixed bar.
+ */
+interface Props { overlay?: boolean }
+const { overlay = false } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const links = [
+  { label: 'Product', href: '/#how' },
+  { label: 'Features', href: '/#features' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Customers', href: '/#stories' },
+  { label: 'Changelog', href: '/changelog' },
+  { label: 'About', href: '/about' },
+];
+---
+<nav id="site-nav" class="fixed inset-x-0 top-0 z-50 pt-4 transition-[padding] duration-300 sm:pt-6" aria-label="Primary">
+  <div class="container-x">
+    <div data-nav-bar class="relative mx-auto flex h-14 items-center justify-between rounded-full bg-ink-950/30 pl-5 pr-2 ring-1 ring-white/10 backdrop-blur-md transition-all duration-300">
+      <a href="/" class="flex items-center gap-2 text-[15px] font-semibold tracking-tight" aria-label="Talora home">
+        <Logo class="size-6" /> Talora
+      </a>
+      <ul class="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 text-[13px] text-white/75 lg:flex">
+        {links.map((l) => (
+          <li>
+            <a href={l.href} aria-current={path === l.href ? 'page' : undefined}
+              class:list={['rounded-full px-3.5 py-2 transition hover:bg-white/[0.06] hover:text-white', path === l.href && 'bg-white/[0.08] text-white']}>{l.label}</a>
+          </li>
+        ))}
+      </ul>
+      <div class="hidden items-center gap-1.5 lg:flex">
+        <a href="/login" class="rounded-full px-3.5 py-2 text-[13px] text-white/75 transition hover:text-white">Sign in</a>
+        <a href="/signup" class="btn-amber">Start free</a>
+      </div>
+      <button data-menu-btn class="grid size-10 place-items-center rounded-full bg-white/10 lg:hidden" aria-expanded="false" aria-controls="site-menu" aria-label="Open menu">
+        <Icon name="menu" class="size-5" />
+      </button>
+
+      <div id="site-menu" data-menu class="absolute inset-x-0 top-[calc(100%+8px)] hidden rounded-2xl bg-ink-900/95 p-3 shadow-2xl ring-1 ring-white/10 backdrop-blur-xl lg:hidden">
+        <ul class="grid text-sm">
+          {links.map((l) => <li><a href={l.href} class="block rounded-xl px-3 py-2.5 hover:bg-white/5">{l.label}</a></li>)}
+          <li class="mt-2 flex gap-2 border-t border-white/10 pt-3">
+            <a href="/login" class="btn-dark flex-1 justify-center">Sign in</a>
+            <a href="/signup" class="btn-amber flex-1 justify-center">Start free</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+{!overlay && <div class="h-[88px] sm:h-[100px]" aria-hidden="true"></div>}
+
+<script>
+  const nav = document.getElementById('site-nav')!;
+  const bar = nav.querySelector<HTMLElement>('[data-nav-bar]')!;
+  const btn = nav.querySelector<HTMLButtonElement>('[data-menu-btn]')!;
+  const menu = nav.querySelector<HTMLElement>('[data-menu]')!;
+
+  // Compact, more solid bar once the page is scrolled
+  const onScroll = () => {
+    const scrolled = window.scrollY > 24;
+    nav.classList.toggle('sm:pt-6', !scrolled);
+    nav.classList.toggle('pt-4', !scrolled);
+    nav.classList.toggle('pt-3', scrolled);
+    bar.classList.toggle('h-14', !scrolled);
+    bar.classList.toggle('h-12', scrolled);
+    bar.classList.toggle('bg-ink-950/30', !scrolled);
+    bar.classList.toggle('bg-ink-950/80', scrolled);
+    bar.classList.toggle('shadow-[0_12px_40px_-12px_rgba(0,0,0,0.7)]', scrolled);
+    bar.classList.toggle('backdrop-blur-md', !scrolled);
+    bar.classList.toggle('backdrop-blur-xl', scrolled);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Mobile menu
+  const close = () => { menu.classList.add('hidden'); btn.setAttribute('aria-expanded', 'false'); };
+  btn.addEventListener('click', () => {
+    const open = menu.classList.toggle('hidden') === false;
+    btn.setAttribute('aria-expanded', String(open));
+  });
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  document.addEventListener('click', (e) => { if (!nav.contains(e.target as Node)) close(); });
+</script>

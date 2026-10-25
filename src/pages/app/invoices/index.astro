@@ -1,0 +1,9 @@
+---
+import AppLayout from '../../../layouts/AppLayout.astro';
+import Invoices from '../../../app/pages/Invoices';
+---
+<AppLayout title="Invoices">
+  <Invoices client:only="react">
+    <div slot="fallback" class="space-y-6"><div class="skeleton h-9 w-64"></div><div class="grid grid-cols-2 gap-4 xl:grid-cols-4"><div class="skeleton h-28"></div><div class="skeleton h-28"></div><div class="skeleton h-28"></div><div class="skeleton h-28"></div></div><div class="skeleton h-96"></div></div>
+  </Invoices>
+</AppLayout>

@@ -1,0 +1,12 @@
+---
+interface Props { title: string; accent?: string; text: string }
+const { title, accent, text } = Astro.props;
+---
+<div class="grid gap-6 md:grid-cols-[1.25fr_1fr] md:items-end" data-reveal>
+  <div>
+    <h2 class="text-3xl font-medium leading-[1.1] tracking-[-0.035em] text-balance sm:text-[42px]">
+      {title}{accent && <> <span class="serif-accent text-amber-soft">{accent}</span></>}
+    </h2>
+  </div>
+  <div class="md:flex md:justify-end"><p class="max-w-sm border-l border-amber/30 pl-4 text-[14px] leading-relaxed text-mist-400">{text}</p></div>
+</div>

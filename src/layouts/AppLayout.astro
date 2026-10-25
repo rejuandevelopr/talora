@@ -1,0 +1,107 @@
+---
+import '@fontsource-variable/manrope';
+import '@fontsource-variable/fraunces/opsz-italic.css';
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import Icon from '../components/Icon.astro';
+import AppChrome from '../app/shell/AppChrome';
+
+interface Props { title: string }
+const { title } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/app';
+
+const groups = [
+  { label: '', items: [{ label: 'Dashboard', href: '/app', icon: 'grid' }] },
+  { label: 'Work', items: [
+    { label: 'Clients', href: '/app/clients', icon: 'users' },
+    { label: 'Projects', href: '/app/projects', icon: 'layers' },
+    { label: 'Timeline', href: '/app/timeline', icon: 'calendar' },
+    { label: 'Approvals', href: '/app/approvals', icon: 'check' },
+  ] },
+  { label: 'Money', items: [
+    { label: 'Invoices', href: '/app/invoices', icon: 'receipt' },
+    { label: 'Time', href: '/app/time', icon: 'clock' },
+    { label: 'Reports', href: '/app/reports', icon: 'chart' },
+  ] },
+  { label: 'Studio', items: [
+    { label: 'AI Briefs', href: '/app/briefs', icon: 'sparkle' },
+    { label: 'Messages', href: '/app/messages', icon: 'message' },
+  ] },
+];
+const isActive = (href: string) => (href === '/app' ? path === '/app' : path === href || path.startsWith(href + '/'));
+---
+<!doctype html>
+<html lang="en" class="bg-ink-950">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#08070a" />
+    <meta name="robots" content="noindex" />
+    <title>{title} · Talora</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+  </head>
+  <body class="min-h-dvh bg-ink-950 text-white">
+    <div class="flex min-h-dvh">
+      <!-- Sidebar -->
+      <div id="sidebar-scrim" class="fixed inset-0 z-30 hidden bg-black/60 backdrop-blur-sm lg:hidden"></div>
+      <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 flex w-[248px] -translate-x-full flex-col border-r border-white/[0.06] bg-ink-950 transition-transform duration-300 lg:sticky lg:top-0 lg:h-dvh lg:translate-x-0">
+        <div class="flex h-16 items-center justify-between gap-2 px-5">
+          <a href="/app" class="flex items-center gap-2 text-[15px] font-semibold tracking-tight"><Logo class="size-6" />Talora</a>
+          <span class="rounded-md bg-amber/15 px-1.5 py-0.5 text-[10px] font-semibold text-amber-soft">Demo</span>
+        </div>
+        <div class="px-3">
+          <div class="flex items-center gap-2.5 rounded-xl bg-ink-900 p-2.5 ring-1 ring-white/[0.06]">
+            <span class="grid size-8 place-items-center rounded-lg bg-gradient-to-br from-amber to-ember font-serif text-sm italic text-ink-950">D</span>
+            <div class="min-w-0 text-[12px] leading-tight"><p class="truncate font-semibold">Dune &amp; Co</p><p class="text-mist-400">Studio plan · 6 seats</p></div>
+          </div>
+        </div>
+        <nav class="scrollbar-thin mt-4 flex-1 overflow-y-auto px-3 pb-4" aria-label="App">
+          {groups.map((g) => (
+            <div class="mb-4">
+              {g.label && <p class="mb-1.5 px-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-mist-400/80">{g.label}</p>}
+              <ul class="space-y-0.5">
+                {g.items.map((i) => (
+                  <li>
+                    <a href={i.href} aria-current={isActive(i.href) ? 'page' : undefined}
+                      class:list={['flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium transition', isActive(i.href) ? 'bg-white/[0.07] text-white' : 'text-mist-300 hover:bg-white/[0.04] hover:text-white']}>
+                      <Icon name={i.icon} class:list={['size-4', isActive(i.href) ? 'text-amber' : 'text-mist-400']} />
+                      {i.label}
+                      <span data-badge={i.href} class="ml-auto hidden rounded-md bg-amber px-1.5 text-[10px] font-bold text-ink-950"></span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
+        <div class="space-y-0.5 border-t border-white/[0.06] p-3">
+          <a href="/app/settings" class:list={['flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium transition', isActive('/app/settings') ? 'bg-white/[0.07] text-white' : 'text-mist-300 hover:bg-white/[0.04] hover:text-white']}><Icon name="settings" class="size-4 text-mist-400" />Settings</a>
+          <a href="/portal?client=c1" target="_blank" class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-mist-300 transition hover:bg-white/[0.04] hover:text-white"><Icon name="link" class="size-4 text-mist-400" />Client portal preview</a>
+          <a href="/" class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-mist-300 transition hover:bg-white/[0.04] hover:text-white"><Icon name="arrow" class="size-4 rotate-180 text-mist-400" />Back to website</a>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <div class="flex min-w-0 flex-1 flex-col">
+        <header class="sticky top-0 z-20 flex h-16 items-center gap-3 border-b border-white/[0.06] bg-ink-950/80 px-4 backdrop-blur-xl sm:px-6">
+          <button id="sidebar-open" class="grid size-9 place-items-center rounded-lg text-mist-300 hover:bg-white/5 lg:hidden" aria-label="Open navigation"><Icon name="menu" class="size-5" /></button>
+          <AppChrome client:only="react" />
+        </header>
+        <main id="main" class="mx-auto w-full max-w-[1480px] flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+          <slot />
+        </main>
+      </div>
+    </div>
+
+    <script>
+      const sb = document.getElementById('sidebar')!;
+      const scrim = document.getElementById('sidebar-scrim')!;
+      const open = () => { sb.classList.remove('-translate-x-full'); scrim.classList.remove('hidden'); };
+      const close = () => { sb.classList.add('-translate-x-full'); scrim.classList.add('hidden'); };
+      document.getElementById('sidebar-open')?.addEventListener('click', open);
+      scrim.addEventListener('click', close);
+    </script>
+  </body>
+</html>

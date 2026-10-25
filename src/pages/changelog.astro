@@ -1,0 +1,235 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import Cta from '../components/Cta.astro';
+
+type Tag = 'New' | 'Improved' | 'Fixed';
+interface Release {
+  version: string;
+  date: string;
+  iso: string;
+  tags: Tag[];
+  title: string;
+  text: string;
+  bullets: string[];
+  link?: [string, string];
+  visual?: 'briefs' | 'portal';
+}
+
+const releases: Release[] = [
+  {
+    version: '3.8', date: 'October 21, 2026', iso: '2026-10-21', tags: ['New', 'Improved'],
+    title: 'AI briefs from your call notes',
+    text: 'Paste notes or a transcript from a discovery call and Talora drafts a structured brief with goals, deliverables, timeline and open questions, ready to share with your client.',
+    bullets: ['Briefs pull client details and past projects automatically', 'Choose a tone that matches your studio voice', 'Turn any brief into a project and quote in one click', 'Faster AI responses across the workspace, about 40% quicker'],
+    link: ['/app/briefs', 'Try AI briefs in the demo'], visual: 'briefs',
+  },
+  {
+    version: '3.7', date: 'September 30, 2026', iso: '2026-09-30', tags: ['New'],
+    title: 'A redesigned client portal',
+    text: 'The portal now opens on a single page that tells clients exactly what needs their attention, from approvals waiting on them to invoices that are due.',
+    bullets: ['New "Needs you" summary at the top of every portal', 'Inline comments on images, PDFs and video', 'Portal themes that match your brand colours'],
+    link: ['/portal?client=c1', 'Open a sample portal'], visual: 'portal',
+  },
+  {
+    version: '3.6', date: 'August 26, 2026', iso: '2026-08-26', tags: ['New', 'Fixed'],
+    title: 'Retainers and milestone billing',
+    text: 'Set up monthly retainers or split a project into paid milestones. Invoices are created and sent the moment a milestone is approved.',
+    bullets: ['Recurring retainers with rollover hours', 'Milestone invoices tied to approvals', 'Fixed rounding on invoices with mixed tax rates'],
+    link: ['/app/invoices', 'See invoices in the demo'],
+  },
+  {
+    version: '3.5', date: 'July 22, 2026', iso: '2026-07-22', tags: ['Improved'],
+    title: 'A faster studio timeline',
+    text: 'The timeline was rebuilt from the ground up. It now loads large studios in under a second and makes rescheduling a drag away.',
+    bullets: ['Drag to reschedule projects and milestones', 'Group by client, owner or status', 'Today marker and weekend shading'],
+    link: ['/app/timeline', 'Open the timeline'],
+  },
+  {
+    version: '3.4', date: 'June 17, 2026', iso: '2026-06-17', tags: ['New'],
+    title: 'Profitability reports',
+    text: 'See which clients and project types actually make money. Reports combine tracked time, billed amounts and team cost rates.',
+    bullets: ['Margin by client, project and month', 'Export reports to CSV or share a read only link', 'Available on the Agency plan'],
+    link: ['/app/reports', 'View reports'],
+  },
+  {
+    version: '3.3', date: 'May 20, 2026', iso: '2026-05-20', tags: ['Improved', 'Fixed'],
+    title: 'Approvals with version history',
+    text: 'Every approval now keeps a full history of versions and comments, so you can always show what a client signed off on and when.',
+    bullets: ['Compare two versions side by side', 'Approval receipts emailed to both sides', 'Fixed a bug where some comments were not marked as resolved'],
+  },
+  {
+    version: '3.2', date: 'April 15, 2026', iso: '2026-04-15', tags: ['New'],
+    title: 'Time tracking, everywhere',
+    text: 'Start a timer from any task, project or the command palette. Entries flow straight into invoices and reports.',
+    bullets: ['One click timers with idle detection', 'Weekly timesheets with bulk edit', 'Billable and non billable rates per person'],
+    link: ['/app/time', 'Track time in the demo'],
+  },
+  {
+    version: '3.1', date: 'March 18, 2026', iso: '2026-03-18', tags: ['Improved', 'Fixed'],
+    title: 'Search and keyboard shortcuts',
+    text: 'A new command palette lets you jump to any client, project or invoice in a couple of keystrokes.',
+    bullets: ['Press Ctrl or Cmd plus K from anywhere', 'Shortcuts for creating clients, projects and invoices', 'Fixed slow loading of the clients list for large workspaces'],
+  },
+];
+
+const tagStyle: Record<Tag, string> = {
+  New: 'bg-amber/15 text-amber-soft ring-amber/25',
+  Improved: 'bg-sky-400/10 text-sky-200 ring-sky-300/20',
+  Fixed: 'bg-emerald-400/10 text-emerald-200 ring-emerald-300/20',
+};
+---
+<Base title="Changelog | Talora" description="Everything new, improved and fixed in Talora. We ship something useful almost every week.">
+  <SiteNav />
+  <PageHero
+    label="Changelog"
+    title="What is new in"
+    accent="Talora"
+    subtitle="New features, improvements and fixes. We ship something useful almost every week, and we write it all down here."
+    photo="milkyWay"
+    position="object-[50%_40%]"
+  >
+    <a href="#subscribe" class="animate-fade-up btn-ghost mt-7 self-start [animation-delay:240ms]"><Icon name="mail" class="size-3.5" />Get updates by email</a>
+  </PageHero>
+
+  <main id="main" class="container-x py-20 sm:py-28">
+    <div class="relative mx-auto max-w-5xl">
+    <span class="absolute bottom-6 left-[7px] top-2 w-px bg-gradient-to-b from-amber/60 via-white/10 to-transparent md:left-[207px]" aria-hidden="true"></span>
+    <ol class="relative" aria-label="Releases">
+      {releases.map((r, i) => (
+        <li class="relative grid gap-4 pb-16 pl-8 md:grid-cols-[180px_1fr] md:gap-12 md:pl-0 last:pb-0" data-reveal>
+          <div class="md:pt-1 md:text-right">
+            <p class="text-[13px] font-semibold text-white"><time datetime={r.iso}>{r.date}</time></p>
+            <p class="mt-1 font-mono text-[12px] text-mist-400">v{r.version}</p>
+          </div>
+          <span class:list={['absolute left-0 top-1.5 grid size-[15px] place-items-center rounded-full ring-4 ring-ink-950 md:left-[200px]', i === 0 ? 'bg-amber' : 'bg-ink-600']} aria-hidden="true">
+            {i === 0 && <span class="absolute inset-0 animate-ping rounded-full bg-amber/50"></span>}
+          </span>
+          <article class="md:pl-4">
+            <ul class="flex flex-wrap gap-1.5" aria-label="Release type">
+              {r.tags.map((t) => <li class={`rounded-md px-2 py-0.5 text-[11px] font-semibold ring-1 ${tagStyle[t]}`}>{t}</li>)}
+            </ul>
+            <h2 class="mt-3 text-2xl font-medium tracking-[-0.03em] sm:text-[30px]">{r.title}</h2>
+            <p class="mt-3 max-w-2xl text-[14.5px] leading-relaxed text-mist-300">{r.text}</p>
+
+            {r.visual === 'briefs' && (
+              <div class="relative mt-7 overflow-hidden rounded-[22px] bg-gradient-to-br from-amber/25 via-ember/10 to-ink-900 p-4 ring-1 ring-white/[0.08] sm:p-7" aria-hidden="true">
+                <div class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-amber/30 blur-[80px]"></div>
+                <div class="relative grid gap-3 sm:grid-cols-[1fr_1.3fr]">
+                  <div class="rounded-2xl bg-ink-950/70 p-4 ring-1 ring-white/10 backdrop-blur">
+                    <p class="flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-mist-400"><Icon name="message" class="size-3.5" />Call notes</p>
+                    <div class="mt-4 space-y-2">
+                      <div class="h-2 w-[92%] rounded bg-white/15"></div>
+                      <div class="h-2 w-[78%] rounded bg-white/10"></div>
+                      <div class="h-2 w-[85%] rounded bg-white/10"></div>
+                      <div class="h-2 w-[60%] rounded bg-white/10"></div>
+                      <div class="h-2 w-[72%] rounded bg-white/10"></div>
+                    </div>
+                    <p class="mt-4 text-[11px] text-mist-400">Northfold, rebrand kickoff, 42 min</p>
+                  </div>
+                  <div class="rounded-2xl bg-cream p-4 text-ink-950 shadow-xl shadow-black/30">
+                    <div class="flex items-center justify-between">
+                      <p class="flex items-center gap-1.5 text-[12px] font-semibold"><Icon name="sparkle" class="size-3.5 text-ember" />Draft brief</p>
+                      <span class="rounded-md bg-ink-950 px-1.5 py-0.5 text-[10px] font-semibold text-cream">Ready to share</span>
+                    </div>
+                    <p class="mt-3 text-[15px] font-semibold tracking-tight">Northfold brand refresh</p>
+                    <dl class="mt-3 grid grid-cols-3 gap-2 text-[11px]">
+                      <div class="rounded-lg bg-ink-950/[0.06] p-2"><dt class="text-ink-500">Budget</dt><dd class="font-semibold">$48k</dd></div>
+                      <div class="rounded-lg bg-ink-950/[0.06] p-2"><dt class="text-ink-500">Timeline</dt><dd class="font-semibold">10 weeks</dd></div>
+                      <div class="rounded-lg bg-ink-950/[0.06] p-2"><dt class="text-ink-500">Phases</dt><dd class="font-semibold">4</dd></div>
+                    </dl>
+                    <ul class="mt-3 space-y-1.5 text-[12px] text-ink-700">
+                      <li class="flex items-center gap-2"><Icon name="check" class="size-3 text-ember" />Goals and success metrics</li>
+                      <li class="flex items-center gap-2"><Icon name="check" class="size-3 text-ember" />Deliverables and milestones</li>
+                      <li class="flex items-center gap-2"><Icon name="check" class="size-3 text-ember" />3 open questions for the client</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {r.visual === 'portal' && (
+              <div class="relative mt-7 overflow-hidden rounded-[22px] bg-gradient-to-br from-sky-400/10 via-amber/10 to-ink-900 p-4 ring-1 ring-white/[0.08] sm:p-7" aria-hidden="true">
+                <div class="absolute -bottom-20 -left-10 h-48 w-64 rounded-full bg-amber/20 blur-[80px]"></div>
+                <div class="relative rounded-2xl bg-ink-950/75 p-4 ring-1 ring-white/10 backdrop-blur">
+                  <div class="flex items-center justify-between border-b border-white/[0.07] pb-3">
+                    <p class="flex items-center gap-2 text-[13px] font-semibold"><span class="grid size-6 place-items-center rounded-md bg-amber text-[11px] font-bold text-ink-950">K</span>Kiln Studio portal</p>
+                    <span class="flex gap-1"><span class="size-2 rounded-full bg-white/15"></span><span class="size-2 rounded-full bg-white/15"></span><span class="size-2 rounded-full bg-white/15"></span></span>
+                  </div>
+                  <p class="mt-4 text-[11px] uppercase tracking-[0.14em] text-mist-400">Needs you</p>
+                  <div class="mt-3 grid gap-2 sm:grid-cols-3">
+                    <div class="rounded-xl bg-white/[0.04] p-3 ring-1 ring-white/[0.07]"><p class="flex items-center gap-1.5 text-[12px] font-semibold"><Icon name="check" class="size-3.5 text-amber" />2 approvals</p><p class="mt-1 text-[11px] text-mist-400">Packaging round 3</p></div>
+                    <div class="rounded-xl bg-white/[0.04] p-3 ring-1 ring-white/[0.07]"><p class="flex items-center gap-1.5 text-[12px] font-semibold"><Icon name="receipt" class="size-3.5 text-amber" />1 invoice</p><p class="mt-1 text-[11px] text-mist-400">$6,400 due Friday</p></div>
+                    <div class="rounded-xl bg-white/[0.04] p-3 ring-1 ring-white/[0.07]"><p class="flex items-center gap-1.5 text-[12px] font-semibold"><Icon name="message" class="size-3.5 text-amber" />3 replies</p><p class="mt-1 text-[11px] text-mist-400">From Sam and Priya</p></div>
+                  </div>
+                  <div class="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10"><div class="h-full w-[68%] rounded-full bg-gradient-to-r from-amber to-ember"></div></div>
+                  <p class="mt-2 text-[11px] text-mist-400">Project 68% complete, on track for November 14</p>
+                </div>
+              </div>
+            )}
+
+            <ul class="mt-6 space-y-2.5 text-[14px]">
+              {r.bullets.map((b) => (
+                <li class="flex gap-3 text-mist-200"><span class="mt-[9px] size-1.5 shrink-0 rounded-full bg-amber/70" aria-hidden="true"></span>{b}</li>
+              ))}
+            </ul>
+            {r.link && (
+              <a href={r.link[0]} class="group mt-6 inline-flex items-center gap-1.5 text-[13px] font-semibold text-amber-soft hover:text-amber">
+                {r.link[1]} <Icon name="arrow" class="size-3.5 transition group-hover:translate-x-0.5" />
+              </a>
+            )}
+          </article>
+        </li>
+      ))}
+    </ol>
+    </div>
+
+    <section id="subscribe" class="relative isolate mx-auto mt-24 max-w-5xl scroll-mt-24 overflow-hidden rounded-[28px] bg-ink-900 p-7 ring-1 ring-white/[0.07] sm:p-10" data-reveal aria-labelledby="sub-title">
+      <div class="absolute -right-10 -top-20 -z-10 h-60 w-80 rounded-full bg-amber/15 blur-[100px]" aria-hidden="true"></div>
+      <div class="grid gap-8 md:grid-cols-[1fr_1.1fr] md:items-center">
+        <div>
+          <h2 id="sub-title" class="text-2xl font-medium tracking-[-0.03em] sm:text-[32px]">Never miss a <span class="serif-accent text-amber-soft">release</span></h2>
+          <p class="mt-2 max-w-sm text-[14px] leading-relaxed text-mist-400">One short email a month with the highlights. No marketing, unsubscribe in one click.</p>
+        </div>
+        <div>
+          <form id="sub-form" novalidate class="flex flex-col gap-2 sm:flex-row sm:rounded-full sm:bg-ink-950/60 sm:p-1.5 sm:ring-1 sm:ring-white/12">
+            <label for="sub-email" class="sr-only">Email address</label>
+            <input id="sub-email" name="email" type="email" required autocomplete="email" placeholder="you@studio.com" aria-describedby="sub-msg" class="min-w-0 flex-1 rounded-full bg-ink-950/60 px-4 py-2.5 text-[13px] text-white outline-none ring-1 ring-white/12 placeholder:text-white/40 focus:ring-amber/60 sm:bg-transparent sm:ring-0" />
+            <button class="btn-amber justify-center !py-2.5">Subscribe</button>
+          </form>
+          <p id="sub-msg" class="mt-3 min-h-[20px] text-[12.5px] text-mist-400" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Cta />
+  <SiteFooter />
+</Base>
+
+<script is:inline>
+  (function () {
+    var f = document.getElementById('sub-form');
+    var input = document.getElementById('sub-email');
+    var msg = document.getElementById('sub-msg');
+    if (!f) return;
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var v = input.value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
+        msg.textContent = 'Please enter a valid email address.';
+        msg.className = 'mt-3 min-h-[20px] text-[12.5px] text-ember';
+        input.setAttribute('aria-invalid', 'true');
+        input.focus();
+        return;
+      }
+      input.removeAttribute('aria-invalid');
+      f.innerHTML = '<div class="flex w-full items-center gap-3 rounded-full bg-amber/10 px-4 py-3 text-[13px] text-amber-soft ring-1 ring-amber/25"><svg viewBox="0 0 24 24" class="size-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg><span>You are subscribed. See you next month.</span></div>';
+      msg.className = 'mt-3 min-h-[20px] text-[12.5px] text-mist-400';
+      msg.textContent = 'We will send updates to ' + v + '.';
+    });
+  })();
+</script>

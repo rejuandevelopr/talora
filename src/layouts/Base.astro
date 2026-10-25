@@ -1,0 +1,46 @@
+---
+import '@fontsource-variable/manrope';
+import '@fontsource-variable/fraunces/opsz-italic.css';
+import '../styles/global.css';
+import { unsplash, photos } from '../data/images';
+
+interface Props { title?: string; description?: string }
+const {
+  title = 'Talora | The client workspace for studios and agencies',
+  description = 'Talora brings clients, projects, approvals and invoices into one calm workspace, so studios spend less time chasing and more time making.',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const hero = photos.heroDunes;
+---
+<!doctype html>
+<html lang="en" class="bg-ink-950">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#08070a" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <link rel="preload" as="image" href={unsplash(hero, 1280, 70)} imagesrcset={`${unsplash(hero, 640, 70)} 640w, ${unsplash(hero, 1280, 70)} 1280w, ${unsplash(hero, 1920, 70)} 1920w`} imagesizes="(min-width: 1240px) 1240px, 100vw" fetchpriority="high" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Talora" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={unsplash(hero, 1200, 75, 630)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline>document.documentElement.classList.add('js')</script>
+  </head>
+  <body class="min-h-dvh overflow-x-hidden">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 btn-light">Skip to content</a>
+    <slot />
+    <script>
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      }, { rootMargin: '0px 0px -10% 0px' });
+      document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
