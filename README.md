@@ -1,75 +1,111 @@
-# Talora: client workspace for studios (portfolio demo)
+# Talora
 
-A complete, end to end product demo: marketing site, auth, onboarding, the studio web app and a
-client facing portal. Built with **Astro 5, Tailwind CSS v4, React 19 islands, zustand and lucide-react**.
+**A dark, premium SaaS concept for creative studios.** Marketing site, onboarding, studio dashboard and a client portal, designed and built end to end.
 
-It is a frontend demo: there is no backend. All data lives in a persisted store in the browser
-(localStorage), so everything you click (create clients, send invoices, approve work, pay invoices,
-chat, track time) really updates the app and survives a refresh. Use **Reset demo data** in the
-account menu to start over.
+**Live demo:** [talora-studio.vercel.app](https://talora-studio.vercel.app)
 
-## Run
-
-```bash
-npm install
-npm run dev      # http://localhost:4321
-npm run build    # static output in /dist (deploy anywhere: Vercel, Netlify, Cloudflare Pages)
-npm run preview
-```
-
-## Pages
-
-**Marketing**
-| Route | Page |
+| Try it | Link |
 | --- | --- |
-| `/` | Landing page |
-| `/pricing` | Plans, full comparison table, FAQ |
-| `/about` | Story, values, team |
-| `/changelog` | Release timeline |
-| `/contact` | Contact form with validation |
-| `/privacy`, `/terms` | Legal pages with sticky table of contents |
-| `/404` | Not found page |
+| Marketing site | [talora-studio.vercel.app](https://talora-studio.vercel.app) |
+| Studio app | [talora-studio.vercel.app/app](https://talora-studio.vercel.app/app) |
+| Client portal | [talora-studio.vercel.app/portal?client=c1](https://talora-studio.vercel.app/portal?client=c1) |
 
-**Auth**
-| Route | Page |
-| --- | --- |
-| `/login` | Sign in (any email works, or "Continue with demo account") |
-| `/signup` | Create a workspace |
-| `/forgot-password` | Reset flow with resend countdown |
-| `/onboarding` | 4 step setup wizard (studio, brand colour, team invites, import) |
+![Astro](https://img.shields.io/badge/Astro-5-ff5d01?logo=astro&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38bdf8?logo=tailwindcss&logoColor=white)
+![Deployed on Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000?logo=vercel&logoColor=white)
 
-**Studio app** (`/app`)
-| Route | Page |
-| --- | --- |
-| `/app` | Dashboard: KPIs, revenue chart, cash flow, projects, approvals, deadlines, activity |
-| `/app/clients`, `/app/clients/view?id=` | Client list (table and cards) and client detail |
-| `/app/projects`, `/app/projects/view?id=` | Kanban board (drag and drop) or list, plus project detail with tasks, milestones, files, discussion |
-| `/app/timeline` | Gantt timeline with today marker and milestones |
-| `/app/approvals` | Review queue with design previews and comments |
-| `/app/invoices`, `/app/invoices/new`, `/app/invoices/view?id=` | Invoice list, builder with live preview, printable invoice |
-| `/app/time` | Live timer, weekly timesheet, entries |
-| `/app/reports` | Revenue, client, utilization and profitability reports, CSV export |
-| `/app/briefs` | AI brief generator (simulated locally) that turns call notes into a scoped project |
-| `/app/messages` | Client inbox with simulated replies |
-| `/app/settings` | Profile, workspace and branding, team, billing, notifications, integrations |
+---
 
-Global: ⌘K / Ctrl+K search palette, notifications, quick create menu, running timer in the top bar.
+## About the project
+
+Talora is a concept product: a client workspace for design studios and agencies. It brings clients, projects, approvals, invoices and time tracking into one calm place, plus a branded portal where clients review work and pay.
+
+Most SaaS portfolio pieces stop at the landing page. This one covers the full journey across **27 connected pages**, from the first visit to a working product.
+
+It is a frontend demo with no backend. All data lives in a persisted store in the browser, so everything you click really updates the app and survives a refresh. Every visitor gets their own copy of the demo data. Use **Reset demo data** in the account menu to start over.
+
+## A 60 second tour
+
+1. Open the [studio app](https://talora-studio.vercel.app/app) and look around the dashboard.
+2. Press **Ctrl+K** (or **⌘K**) and search for "kiln".
+3. Open **Client portal preview** from the sidebar.
+4. In the portal, approve "Packaging round 2", then pay invoice DC-0142 with the test card.
+5. Go back to the studio app. The notification bell, Approvals and Invoices all reflect it instantly.
+6. Open **AI Briefs**, click "Use sample notes", generate a brief, then "Create project from brief".
+
+## Features
+
+**Marketing site**
+- Landing page with auto-playing product walkthrough and interactive feature tabs
+- Pricing with a monthly and yearly toggle, full plan comparison table and FAQ
+- About, changelog, contact form with validation, privacy, terms and a custom 404
+
+**Sign up and onboarding**
+- Login, signup with password strength meter, password reset
+- 4 step onboarding: studio details, brand colour with live portal preview, team invites, data import
+
+**Studio app**
+- Dashboard with revenue chart, cash flow, active projects, approvals and deadlines
+- Clients with table and card views, plus detailed client pages
+- Projects on a drag and drop board or list, with tasks, milestones, files and discussion
+- Timeline view with milestones and a today marker
+- Design approvals with previews, versions and comments
+- Invoice builder with a live preview, plus a printable invoice
+- Time tracker with a live timer and weekly timesheet
+- Reports with revenue, utilization and profitability, plus CSV export
+- AI brief generator that turns call notes into a scoped project (simulated locally)
+- Client messaging with simulated replies
+- Settings for profile, workspace branding, team, billing, notifications and integrations
+- Global search palette, notifications and quick create menu
 
 **Client portal**
-| Route | Page |
+- Project progress and milestones
+- Approve designs or request changes
+- Pay invoices with a test card
+- Shared files and messages with the studio
+
+## Tech stack
+
+| Area | Choice |
 | --- | --- |
-| `/portal?client=c1` | What the client sees: progress, approve or request changes, pay invoices (use the test card), files, messages. Actions show up in the studio app instantly. |
+| Framework | Astro 5 (static pages, React islands only where needed) |
+| UI | React 19, Tailwind CSS v4 with custom design tokens |
+| State | Zustand, persisted to localStorage |
+| Language | TypeScript |
+| Charts | Custom SVG components, no chart library |
+| Icons | lucide-react |
+| Fonts | Manrope and Fraunces, self hosted |
+| Hosting | Vercel |
 
-## Try this flow
-1. Open `/app` and look around, then open **Client portal preview** in the sidebar.
-2. In the portal, approve "Packaging round 2" and pay invoice DC-0142 with the test card.
-3. Back in the studio app: the notification bell, Approvals and Invoices all reflect it.
-4. Go to **AI Briefs**, click "Use sample notes", generate, then "Create project from brief".
+## Run locally
 
-## Structure
+Requires Node.js 18 or newer.
+
+```bash
+git clone https://github.com/rejuandevelopr/talora.git
+cd talora
+npm install
+npm run dev      # http://localhost:4321
+```
+
+Other commands:
+
+```bash
+npm run build    # static output in /dist
+npm run preview  # preview the production build
+```
+
+## Deploy
+
+This is a fully static site, so it deploys anywhere. On Vercel, import the repository and click Deploy. Vercel detects Astro automatically and redeploys on every push to `main`.
+
+## Project structure
+
 ```
 src/
-  pages/            Astro routes (marketing, auth, /app, /portal)
+  pages/            Routes: marketing, auth, /app and /portal
   layouts/          Base (marketing), AppLayout (sidebar shell), AuthLayout, PortalLayout
   components/       Marketing components (Hero, SiteNav, Pricing, PageHero, ...)
   app/
@@ -77,11 +113,22 @@ src/
     ui/             ui.tsx (design system), charts.tsx (SVG charts), domain widgets
     shell/          AppChrome (top bar, search palette, notifications)
     pages/          One React component per app page
-    auth/, portal/  Auth flows and the client portal
+    auth/           Login, signup, password reset, onboarding
+    portal/         The client portal
   styles/global.css Tailwind theme tokens and utilities
 ```
 
-## Notes
-- Dark only design system: ink, cream and amber tokens; Manrope with Fraunces italic accents.
-- Photos load from the Unsplash CDN with responsive srcset. If one fails, a warm gradient shows instead.
-- Fully responsive (checked at 390px) and keyboard accessible.
+## Credits
+
+- Landing page layout inspired by the Nexora concept design. All branding, copy and the remaining product screens are original.
+- Photography from [Unsplash](https://unsplash.com).
+- Talora, its customers and all people shown are fictional.
+
+## Author
+
+Designed and built by **S.M. Rejuanul Islam**, Full Stack AI Engineer.
+
+- Portfolio: [rejuandeveloper.com](https://rejuandeveloper.com)
+- Contra: [contra.com/rejuanul_islam](https://contra.com/rejuanul_islam)
+- LinkedIn: [s-m-rejuanul-islam](https://www.linkedin.com/in/s-m-rejuanul-islam-082a90252)
+- Book a call: [cal.com/s.m.rejuanul-islam-cvqtpm](https://cal.com/s.m.rejuanul-islam-cvqtpm)
